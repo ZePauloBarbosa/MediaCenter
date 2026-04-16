@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SmartCity — Media Gallery</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #20315A;
+    --navy-light: #2A3F70;
+    --green: #33A542;
+    --green-hover: #2B8E38;
+    --page-bg: #FAFAFC;
+    --surface: #FFFFFF;
+    --border: #E2E4EA;
+    --border-light: #F0F2F7;
+    --text-primary: #1A1F2E;
+    --text-secondary: #6B7280;
+    --text-muted: #9CA3AF;
+    --icon: #B4B4C4;
+    --row-hover: #F5F7FC;
+    --row-expanded: #F0F4FF;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.07);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.10);
+    --radius: 8px;
+  }
+
+  body { font-family: 'Montserrat', sans-serif; background: var(--page-bg); color: var(--text-primary); font-size: 13px; min-height: 100vh; }
+
+  svg.icon { display: inline-block; vertical-align: middle; flex-shrink: 0; }
+
+  /* ── TOP NAV ── */
+  .topnav { background: var(--navy); height: 56px; display: flex; align-items: center; padding: 0 24px; gap: 8px; position: sticky; top: 0; z-index: 200; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+  .logo { display: flex; align-items: center; gap: 8px; margin-right: 16px; }
+  .logo-mark { width: 32px; height: 32px; background: var(--green); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  .logo-text { color: white; font-weight: 700; font-size: 15px; letter-spacing: 0.02em; }
+  .nav-items { display: flex; align-items: center; gap: 4px; flex: 1; justify-content: center; }
+  .nav-item { display: flex; align-items: center; gap: 7px; color: rgba(255,255,255,0.6); font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; padding: 8px 14px; cursor: pointer; text-decoration: none; transition: all 0.15s; }
+  .nav-item:hover { color: rgba(255,255,255,0.9); }
+  .nav-item.active { color: white; padding-bottom: 6px; border-bottom: 2px solid var(--green); }
+  .nav-item svg { opacity: 0.7; }
+  .nav-item.active svg { opacity: 1; stroke: white; }
+  .nav-right { display: flex; align-items: center; gap: 12px; }
+  .vendor-badge { background: rgba(255,255,255,0.15); color: white; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 20px; }
+
+  /* ── SUB NAV ── */
+  .subnav { background: white; border-bottom: 1px solid var(--border); padding: 0 32px; display: flex; align-items: center; height: 44px; }
+  .subnav-item { font-size: 13px; font-weight: 500; color: var(--text-secondary); padding: 10px 14px; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: all 0.15s; }
+  .subnav-item:hover { color: var(--navy); }
+  .subnav-item.active { color: var(--green); border-bottom-color: var(--green); font-weight: 600; }
+
+  /* ── PAGE HEADER ── */
+  .page-header { padding: 24px 32px 0; display: flex; align-items: center; justify-content: space-between; }
+  .page-title { font-size: 22px; font-weight: 700; color: var(--text-primary); }
+  .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 6px; font-size: 12px; font-weight: 600; font-family: 'Montserrat', sans-serif; cursor: pointer; border: none; letter-spacing: 0.02em; transition: all 0.15s; }
+  .btn-outline { background: white; border: 1px solid var(--border); color: var(--text-primary); }
+  .btn-outline:hover { border-color: var(--navy); color: var(--navy); }
+  .btn-sm { padding: 6px 12px; font-size: 11px; }
+  .btn-danger { background: white; border: 1px solid #FECACA; color: #DC2626; }
+  .btn-danger:hover { background: #FEF2F2; }
+
+  /* ── FILTER BAR ── */
+  .filter-bar { padding: 14px 32px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; background: white; border-bottom: 1px solid var(--border); margin-top: 16px; }
+  .filter-label { font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.07em; white-space: nowrap; }
+  .date-picker-wrapper { display: flex; align-items: center; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; background: white; }
+  .date-picker-wrapper:focus-within { border-color: var(--navy); }
+  .date-input { border: none; padding: 6px 10px; font-size: 12px; font-family: 'Montserrat', sans-serif; font-weight: 500; color: var(--text-primary); background: transparent; outline: none; width: 116px; cursor: pointer; }
+  .date-sep { font-size: 11px; color: var(--text-muted); padding: 0 2px; }
+  .filter-select { appearance: none; background: white; border: 1px solid var(--border); border-radius: 6px; padding: 6px 28px 6px 10px; font-size: 12px; font-family: 'Montserrat', sans-serif; color: var(--text-primary); font-weight: 500; cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23B4B4C4' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 9px center; min-width: 150px; }
+  .filter-select:focus { outline: none; border-color: var(--navy); }
+  .filter-divider { width: 1px; height: 24px; background: var(--border); flex-shrink: 0; }
+  .more-filters-btn { display: inline-flex; align-items: center; gap: 5px; padding: 6px 12px; border: 1px dashed var(--border); border-radius: 6px; font-size: 11px; font-weight: 600; color: var(--text-secondary); cursor: pointer; background: transparent; font-family: 'Montserrat', sans-serif; transition: all 0.15s; }
+  .more-filters-btn:hover { border-color: var(--navy); color: var(--navy); background: #F0F4FF; }
+  .more-filters-panel { display: none; width: 100%; padding: 12px 0 4px; border-top: 1px dashed var(--border-light); margin-top: 4px; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .more-filters-panel.open { display: flex; }
+
+  /* ── TABLE ── */
+  .table-area { padding: 20px 32px; }
+  .table-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+  .table-count { font-size: 12px; font-weight: 600; color: var(--text-secondary); }
+  .bulk-actions { display: flex; gap: 8px; }
+  .media-table { width: 100%; border-collapse: separate; border-spacing: 0; background: white; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-sm); }
+  .media-table thead th { background: var(--page-bg); padding: 10px 14px; text-align: left; font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.07em; border-bottom: 1px solid var(--border); white-space: nowrap; user-select: none; }
+  .media-table thead th.sortable { cursor: pointer; }
+  .media-table thead th.sortable:hover { color: var(--navy); background: #EEF2FF; }
+  .media-table thead th.sorted { color: var(--navy); }
+
+  /* instance rows */
+  .instance-row { cursor: pointer; transition: background 0.12s; }
+  .instance-row:hover { background: var(--row-hover); }
+  .instance-row.expanded { background: var(--row-expanded); }
+  .instance-row td { padding: 12px 14px; border-bottom: 1px solid var(--border-light); vertical-align: middle; }
+  .instance-row.expanded td { border-bottom: 0; }
+
+  .expand-toggle { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 4px; background: var(--border-light); transition: all 0.2s; flex-shrink: 0; }
+  .expand-toggle svg { transition: transform 0.2s; }
+  .instance-row.expanded .expand-toggle { background: var(--navy); }
+  .instance-row.expanded .expand-toggle svg { transform: rotate(90deg); stroke: white; }
+
+  /* thumb stack */
+  .thumb-stack { display: flex; align-items: center; }
+  .thumb { width: 40px; height: 40px; border-radius: 5px; border: 2px solid white; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .thumb + .thumb { margin-left: -10px; }
+  .thumb-more { width: 40px; height: 40px; border-radius: 5px; border: 2px solid white; background: var(--navy); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: white; margin-left: -10px; flex-shrink: 0; }
+  .thumb-road { background: #E2E8F0; }
+  .thumb-interior { background: #CBD5E1; }
+  .thumb-video { background: #94A3B8; }
+  .thumb-pending { background: #F1F5F9; }
+  .thumb-failed { background: #FEE2E2; }
+  .thumb-expired { background: #F1F5F9; }
+
+  .instance-summary { display: flex; flex-direction: column; gap: 2px; }
+  .instance-event { font-size: 12px; font-weight: 600; color: var(--text-primary); display: flex; align-items: center; gap: 6px; }
+  .instance-address { font-size: 11px; color: var(--text-secondary); font-weight: 500; padding-left: 20px; }
+
+  .cell-vehicle-id { font-size: 12px; font-weight: 600; color: var(--text-primary); }
+  .cell-route { font-size: 10px; color: var(--text-muted); font-weight: 500; }
+  .cell-datetime { font-size: 12px; font-weight: 600; color: var(--text-primary); white-space: nowrap; }
+  .cell-time { font-size: 11px; color: var(--text-muted); font-weight: 500; }
+  .cell-driver { font-size: 12px; font-weight: 500; color: var(--text-primary); }
+
+  /* badges */
+  .badge { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 20px; white-space: nowrap; }
+  .badge-available { background: #F0FDF4; color: #166534; }
+  .badge-pending { background: #FFFBEB; color: #92400E; }
+  .badge-failed { background: #FEF2F2; color: #991B1B; }
+  .badge-expired { background: #F9FAFB; color: #6B7280; border: 1px solid #E5E7EB; }
+  .badge-expiring { background: #FEF3C7; color: #92400E; }
+
+  /* row actions */
+  .row-actions { display: flex; align-items: center; gap: 6px; }
+  .icon-btn { display: inline-flex; align-items: center; justify-content: center; gap: 5px; height: 28px; border-radius: 5px; background: none; border: 1px solid var(--border); color: var(--text-secondary); font-size: 11px; font-weight: 600; font-family: 'Montserrat', sans-serif; cursor: pointer; padding: 0 8px; transition: all 0.15s; }
+  .icon-btn:hover { background: var(--navy); color: white; border-color: var(--navy); }
+  .icon-btn:hover svg { stroke: white; }
+  .icon-btn svg { stroke: var(--icon); }
+  .icon-btn.view { border-color: var(--navy); color: var(--navy); }
+  .icon-btn.view svg { stroke: var(--navy); }
+  .icon-btn.view:hover { background: var(--navy); color: white; }
+  .icon-btn.icon-only { width: 28px; padding: 0; }
+  .icon-btn.retry { border-color: #FECACA; color: #DC2626; }
+  .icon-btn.retry svg { stroke: #DC2626; }
+  .icon-btn.retry:hover { background: #FEF2F2; border-color: #FCA5A5; }
+  .icon-btn.disabled { opacity: 0.35; cursor: default; pointer-events: none; }
+
+  /* sort indicator */
+  .sort-arrow { margin-left: 4px; display: inline-block; }
+
+  /* child rows */
+  .child-row { background: #F7F9FF; }
+  .child-row td { padding: 8px 14px 8px 56px; border-bottom: 1px solid var(--border-light); vertical-align: middle; }
+  .child-row:last-of-type td { border-bottom: 1px solid var(--border); }
+  .child-thumb { width: 32px; height: 32px; border-radius: 4px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .child-cam-label { font-size: 11px; font-weight: 600; color: var(--text-secondary); }
+  .child-type-label { font-size: 11px; color: var(--text-muted); }
+  .expiry-chip { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 600; background: #FEF3C7; color: #92400E; padding: 2px 7px; border-radius: 20px; }
+
+  /* request more inline */
+  .request-more-tr td { background: #EEF2FF; border-bottom: 1px solid var(--border); padding: 8px 14px 8px 56px; }
+  .request-more-inline { display: flex; align-items: center; gap: 8px; }
+  .rm-label { font-size: 11px; font-weight: 700; color: var(--navy); white-space: nowrap; display: flex; align-items: center; gap: 5px; }
+  .rm-select { appearance: none; background: white; border: 1px solid var(--border); border-radius: 5px; padding: 4px 24px 4px 8px; font-size: 11px; font-family: 'Montserrat', sans-serif; color: var(--text-primary); font-weight: 500; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5' viewBox='0 0 8 5'%3E%3Cpath d='M1 1l3 3 3-3' stroke='%23B4B4C4' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 7px center; }
+  .rm-btn { padding: 4px 14px; background: var(--navy); color: white; border: none; border-radius: 5px; font-size: 11px; font-weight: 600; font-family: 'Montserrat', sans-serif; cursor: pointer; white-space: nowrap; }
+  .rm-btn:hover { background: var(--navy-light); }
+
+  /* detail panel */
+  .detail-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.35); z-index: 300; backdrop-filter: blur(2px); }
+  .detail-overlay.open { display: block; }
+  .detail-panel { position: fixed; top: 0; right: 0; width: 740px; height: 100vh; background: white; z-index: 400; box-shadow: -8px 0 40px rgba(0,0,0,0.15); display: flex; flex-direction: column; transform: translateX(100%); transition: transform 0.25s ease; }
+  .detail-panel.open { transform: translateX(0); }
+  .detail-header { background: var(--navy); color: white; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+  .detail-title { font-size: 13px; font-weight: 600; }
+  .detail-subtitle { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 2px; }
+  .detail-close { background: rgba(255,255,255,0.15); border: none; color: white; width: 28px; height: 28px; border-radius: 5px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .detail-close:hover { background: rgba(255,255,255,0.25); }
+  .detail-tabs { display: flex; border-bottom: 1px solid var(--border); background: var(--page-bg); flex-shrink: 0; padding: 0 20px; overflow-x: auto; }
+  .detail-tab { padding: 10px 14px; font-size: 11px; font-weight: 600; color: var(--text-secondary); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; display: flex; align-items: center; gap: 6px; transition: all 0.15s; white-space: nowrap; }
+  .detail-tab.active { color: var(--navy); border-bottom-color: var(--navy); }
+  .detail-tab:hover { color: var(--navy); }
+  .tab-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .tab-dot-green { background: var(--green); }
+  .tab-dot-amber { background: #F59E0B; }
+  .detail-tab-add { margin-left: auto; color: var(--green); font-size: 11px; font-weight: 600; cursor: pointer; padding: 10px 14px; display: flex; align-items: center; gap: 5px; white-space: nowrap; }
+  .detail-body { display: flex; flex: 1; overflow: hidden; }
+  .detail-viewer { flex: 1; background: #1E293B; display: flex; align-items: center; justify-content: center; position: relative; }
+  .viewer-cam-label { position: absolute; bottom: 14px; left: 14px; background: rgba(0,0,0,0.55); color: white; font-size: 10px; font-weight: 600; padding: 4px 10px; border-radius: 20px; display: flex; align-items: center; gap: 5px; }
+  .viewer-nav { position: absolute; top: 50%; transform: translateY(-50%); display: flex; width: 100%; justify-content: space-between; padding: 0 12px; pointer-events: none; }
+  .viewer-nav-btn { pointer-events: all; background: rgba(255,255,255,0.15); color: white; border: none; width: 34px; height: 34px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+  .viewer-nav-btn:hover { background: rgba(255,255,255,0.28); }
+  .detail-sidebar { width: 256px; border-left: 1px solid var(--border); overflow-y: auto; flex-shrink: 0; }
+  .sidebar-block { padding: 14px 16px; border-bottom: 1px solid var(--border-light); }
+  .sidebar-block-title { font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
+  .sidebar-field { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+  .sidebar-key { font-size: 11px; font-weight: 500; color: var(--text-muted); flex-shrink: 0; min-width: 58px; }
+  .sidebar-val { font-size: 11px; font-weight: 600; color: var(--text-primary); text-align: right; }
+  .sidebar-link { font-size: 11px; font-weight: 600; color: var(--green); cursor: pointer; display: flex; align-items: center; gap: 3px; }
+  .dl-row { display: flex; gap: 6px; margin-top: 10px; }
+  .dl-btn { flex: 1; padding: 7px; background: white; border: 1px solid var(--border); border-radius: 5px; font-size: 11px; font-weight: 600; font-family: 'Montserrat', sans-serif; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; }
+  .dl-btn:hover { border-color: var(--navy); color: var(--navy); }
+  .dl-btn svg { stroke: var(--icon); }
+  .dl-btn:hover svg { stroke: var(--navy); }
+  .dl-btn.primary { background: var(--green); color: white; border-color: var(--green); }
+  .dl-btn.primary svg { stroke: white; }
+  .dl-btn.primary:hover { background: var(--green-hover); }
+  .request-more-panel { padding: 14px 16px; }
+  .rm-title { font-size: 11px; font-weight: 700; color: var(--text-primary); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+  .rm-field { margin-bottom: 8px; }
+  .rm-field-label { font-size: 10px; font-weight: 600; color: var(--text-muted); margin-bottom: 4px; }
+  .rm-field-select { width: 100%; appearance: none; background: white; border: 1px solid var(--border); border-radius: 5px; padding: 6px 10px; font-size: 11px; font-family: 'Montserrat', sans-serif; color: var(--text-primary); font-weight: 500; }
+  .rm-pair { display: flex; gap: 6px; }
+  .rm-pair .rm-field { flex: 1; }
+  .rm-submit { width: 100%; padding: 8px; background: var(--navy); color: white; border: none; border-radius: 5px; font-size: 12px; font-weight: 600; font-family: 'Montserrat', sans-serif; cursor: pointer; margin-top: 4px; display: flex; align-items: center; justify-content: center; gap: 6px; }
+  .rm-submit:hover { background: var(--navy-light); }
+</style>
+</head>
+<body>
+
+<!-- SVG ICON DEFS -->
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- dispatch / lightning -->
+    <symbol id="ic-dispatch" viewBox="0 0 20 20" fill="none">
+      <path d="M11 2L4 11h7l-2 7 7-9h-7l2-7z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <!-- customers / person -->
+    <symbol id="ic-customers" viewBox="0 0 20 20" fill="none">
+      <circle cx="10" cy="7" r="3.5" stroke="currentColor" stroke-width="1.5"/>
+      <path d="M3 18c0-3.866 3.134-7 7-7s7 3.134 7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    </symbol>
+    <!-- fleet / truck -->
+    <symbol id="ic-fleet" viewBox="0 0 20 20" fill="none">
+      <rect x="1" y="6" width="12" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+      <path d="M13 9h3.5L19 12.5V15h-6V9z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="5" cy="16" r="1.5" stroke="currentColor" stroke-width="1.5"/>
+      <circle cx="15" cy="16" r="1.5" stroke="currentColor" stroke-width="1.5"/>
+    </symbol>
+    <!-- insights / chart -->
+    <symbol id="ic-insights" viewBox="0 0 20 20" fill="none">
+      <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/>
+      <path d="M10 10L10 4M10 10l4.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    </symbol>
+    <!-- settings / gear -->
+    <symbol id="ic-settings" viewBox="0 0 20 20" fill="none">
+      <circle cx="10" cy="10" r="3" stroke="currentColor" stroke-width="1.5"/>
+      <path d="M10 2v2M10 16v2M2 10h2M16 10h2M4.22 4.22l1.42 1.42M14.36 14.36l1.42 1.42M4.22 15.78l1.42-1.42M14.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    </symbol>
+    <!-- routeware logo mark -->
+    <symbol id="ic-logo" viewBox="0 0 20 20" fill="none">
+      <path d="M4 10 Q10 3 16 10 Q10 17 4 10z" stroke="white" stroke-width="1.5" fill="none"/>
+      <circle cx="10" cy="10" r="2" fill="white"/>
+    </symbol>
+    <!-- camera / image -->
+    <symbol id="ic-camera" viewBox="0 0 20 20" fill="none">
+      <rect x="2" y="5" width="16" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/>
+      <circle cx="10" cy="11" r="3" stroke="currentColor" stroke-width="1.5"/>
+      <path d="M7 5l1.5-2h3L13 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <!-- video / film -->
+    <symbol id="ic-video" viewBox="0 0 20 20" fill="none">
+      <rect x="2" y="5" width="12" height="10" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+      <path d="M14 8.5l4-2.5v8l-4-2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <!-- play -->
+    <symbol id="ic-play" viewBox="0 0 20 20" fill="none">
+      <path d="M6 4l10 6-10 6V4z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+    </symbol>
+    <!-- location pin -->
+    <symbol id="ic-stop" viewBox="0 0 20 20" fill="none">
+      <path d="M10 2C7.239 2 5 4.239 5 7c0 4.5 5 11 5 11s5-6.5 5-11c0-2.761-2.239-5-5-5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+      <circle cx="10" cy="7" r="2" stroke="currentColor" stroke-width="1.5"/>
+    </symbol>
+    <!-- alert triangle -->
+    <symbol id="ic-exception" viewBox="0 0 20 20" fill="none">
+      <path d="M9.133 3.5L2 17h16L10.867 3.5a1 1 0 00-1.734 0z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+      <path d="M10 9v4M10 14.5v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    </symbol>
+    <!-- breadcrumb / dot trail -->
+    <symbol id="ic-breadcrumb" viewBox="0 0 20 20" fill="none">
+      <circle cx="4" cy="10" r="2" stroke="currentColor" stroke-width="1.5"/>
+      <circle cx="10" cy="10" r="2" stroke="currentColor" stroke-width="1.5"/>
+      <circle cx="16" cy="10" r="2" stroke="currentColor" stroke-width="1.5"/>
+    </symbol>
+    <!-- car / incident -->
+    <symbol id="ic-incident" viewBox="0 0 20 20" fill="none">
+      <path d="M3 12l1.5-5h11L17 12v3H3v-3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+      <circle cx="6.5" cy="15.5" r="1.5" stroke="currentColor" stroke-width="1.5"/>
+      <circle cx="13.5" cy="15.5" r="1.5" stroke="currentColor" stroke-width="1.5"/>
+      <path d="M7 9.5h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    </symbol>
+    <!-- expand chevron right -->
+    <symbol id="ic-chevron-right" viewBox="0 0 12 12" fill="none">
+      <path d="M4 2.5l4 3.5-4 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <!-- eye / view -->
+    <symbol id="ic-eye" viewBox="0 0 16 16" fill="none">
+      <path d="M1 8s2.5-5 7-5 7 5 7 5-2.5 5-7 5-7-5-7-5z" stroke="currentColor" stroke-width="1.3"/>
+      <circle cx="8" cy="8" r="2" stroke="currentColor" stroke-width="1.3"/>
+    </symbol>
+    <!-- download -->
+    <symbol id="ic-download" viewBox="0 0 16 16" fill="none">
+      <path d="M8 2v8M5 7l3 3 3-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M2 12h12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+    </symbol>
+    <!-- link -->
+    <symbol id="ic-link" viewBox="0 0 16 16" fill="none">
+      <path d="M6.5 9.5a3.5 3.5 0 005 0l2-2a3.5 3.5 0 00-5-5l-1 1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+      <path d="M9.5 6.5a3.5 3.5 0 00-5 0l-2 2a3.5 3.5 0 005 5l1-1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+    </symbol>
+    <!-- retry / refresh -->
+    <symbol id="ic-retry" viewBox="0 0 16 16" fill="none">
+      <path d="M13 8A5 5 0 103 8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+      <path d="M13 4v4h-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <!-- sort up/down -->
+    <symbol id="ic-sort" viewBox="0 0 10 12" fill="none">
+      <path d="M5 1v10M2 8l3 3 3-3M2 4l3-3 3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="ic-sort-desc" viewBox="0 0 10 12" fill="none">
+      <path d="M5 1v10M2 8l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <!-- export / csv -->
+    <symbol id="ic-export" viewBox="0 0 16 16" fill="none">
+      <path d="M9 2H4a1 1 0 00-1 1v10a1 1 0 001 1h8a1 1 0 001-1V6L9 2z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+      <path d="M9 2v4h4" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+      <path d="M5 9h6M5 11h4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+    </symbol>
+    <!-- trash / delete -->
+    <symbol id="ic-trash" viewBox="0 0 16 16" fill="none">
+      <path d="M2 4h12M5 4V3a1 1 0 011-1h4a1 1 0 011 1v1M6 7v5M10 7v5M3 4l1 9a1 1 0 001 1h6a1 1 0 001-1l1-9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <!-- filter -->
+    <symbol id="ic-filter" viewBox="0 0 16 16" fill="none">
+      <path d="M2 4h12M5 8h6M7 12h2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+    </symbol>
+    <!-- plus -->
+    <symbol id="ic-plus" viewBox="0 0 14 14" fill="none">
+      <path d="M7 2v10M2 7h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+    </symbol>
+    <!-- clock / expiry -->
+    <symbol id="ic-clock" viewBox="0 0 14 14" fill="none">
+      <circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.3"/>
+      <path d="M7 4v3.5L9.5 9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <!-- check dot / available -->
+    <symbol id="ic-dot-green" viewBox="0 0 8 8" fill="none">
+      <circle cx="4" cy="4" r="3" fill="#166534" opacity="0.15"/>
+      <circle cx="4" cy="4" r="2" fill="#166534"/>
+    </symbol>
+    <symbol id="ic-dot-amber" viewBox="0 0 8 8" fill="none">
+      <circle cx="4" cy="4" r="3" fill="#92400E" opacity="0.15"/>
+      <circle cx="4" cy="4" r="2" fill="#D97706"/>
+    </symbol>
+    <symbol id="ic-dot-red" viewBox="0 0 8 8" fill="none">
+      <circle cx="4" cy="4" r="3" fill="#991B1B" opacity="0.15"/>
+      <circle cx="4" cy="4" r="2" fill="#DC2626"/>
+    </symbol>
+    <!-- lock / expired -->
+    <symbol id="ic-lock" viewBox="0 0 16 16" fill="none">
+      <rect x="3" y="7" width="10" height="8" rx="1.5" stroke="currentColor" stroke-width="1.3"/>
+      <path d="M5 7V5a3 3 0 016 0v2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+    </symbol>
+    <!-- close x -->
+    <symbol id="ic-close" viewBox="0 0 14 14" fill="none">
+      <path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    </symbol>
+    <!-- external link -->
+    <symbol id="ic-external" viewBox="0 0 12 12" fill="none">
+      <path d="M7 2h3v3M10 2L5.5 6.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M5 3H3a1 1 0 00-1 1v5a1 1 0 001 1h5a1 1 0 001-1V7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+    </symbol>
+    <!-- spinner placeholder (circle dashes) -->
+    <symbol id="ic-pending" viewBox="0 0 20 20" fill="none">
+      <circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3" stroke-linecap="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- TOP NAV -->
+<nav class="topnav">
+  <div class="logo">
+    <div class="logo-mark">
+      <svg class="icon" width="20" height="20"><use href="#ic-logo"/></svg>
+    </div>
+    <span class="logo-text">Routeware</span>
+  </div>
+  <div class="nav-items">
+    <a class="nav-item" href="#">
+      <svg class="icon" width="16" height="16" stroke="rgba(255,255,255,0.6)"><use href="#ic-dispatch"/></svg> DISPATCH
+    </a>
+    <a class="nav-item" href="#">
+      <svg class="icon" width="16" height="16" stroke="rgba(255,255,255,0.6)"><use href="#ic-customers"/></svg> CUSTOMERS
+    </a>
+    <a class="nav-item" href="#">
+      <svg class="icon" width="16" height="16" stroke="rgba(255,255,255,0.6)"><use href="#ic-fleet"/></svg> FLEET
+    </a>
+    <a class="nav-item active" href="#">
+      <svg class="icon" width="16" height="16" stroke="white"><use href="#ic-insights"/></svg> INSIGHTS
+    </a>
+  </div>
+  <div class="nav-right">
+    <span class="vendor-badge">Rugby</span>
+    <div style="width:32px;height:32px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;">
+      <svg class="icon" width="16" height="16" stroke="rgba(255,255,255,0.8)"><use href="#ic-settings"/></svg>
+    </div>
+  </div>
+</nav>
+
+<!-- SUB NAV -->
+<div class="subnav">
+  <div class="subnav-item">Fleet</div>
+  <div class="subnav-item">Data Export</div>
+  <div class="subnav-item active">Media Gallery</div>
+</div>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <h1 class="page-title">Media Gallery</h1>
+  <button class="btn btn-outline">
+    <svg class="icon" width="14" height="14" stroke="var(--icon)"><use href="#ic-export"/></svg>
+    Export CSV
+  </button>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <div style="display:flex;align-items:center;gap:6px;">
+    <span class="filter-label">Date</span>
+    <div class="date-picker-wrapper">
+      <input class="date-input" type="date" value="2026-04-16">
+      <span class="date-sep">→</span>
+      <input class="date-input" type="date" placeholder="End date">
+    </div>
+  </div>
+  <div class="filter-divider"></div>
+  <div style="display:flex;align-items:center;gap:6px;">
+    <span class="filter-label">Vehicle</span>
+    <select class="filter-select">
+      <option>All Vehicles</option>
+      <option>Truck 487225</option>
+      <option>Truck 112A</option>
+      <option>Truck 319B</option>
+      <option>Truck 208C</option>
+    </select>
+  </div>
+  <div style="display:flex;align-items:center;gap:6px;">
+    <span class="filter-label">Driver</span>
+    <select class="filter-select">
+      <option>All Drivers</option>
+      <option>J. Smith</option>
+      <option>M. Torres</option>
+      <option>R. Davis</option>
+      <option>L. Park</option>
+    </select>
+  </div>
+  <div class="filter-divider"></div>
+  <button class="more-filters-btn" onclick="toggleMoreFilters(this)">
+    <svg class="icon" width="14" height="14" stroke="var(--text-secondary)"><use href="#ic-filter"/></svg>
+    More filters
+  </button>
+  <div class="more-filters-panel" id="moreFiltersPanel">
+    <div style="display:flex;align-items:center;gap:6px;">
+      <span class="filter-label">Type</span>
+      <select class="filter-select" style="min-width:130px;"><option>All Media</option><option>Images</option><option>Videos</option></select>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;">
+      <span class="filter-label">Camera</span>
+      <select class="filter-select" style="min-width:140px;"><option>All Cameras</option><option>Road-facing</option><option>Interior</option></select>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;">
+      <span class="filter-label">Status</span>
+      <select class="filter-select" style="min-width:140px;"><option>All Statuses</option><option>Available</option><option>Pending</option><option>Failed</option><option>Expired</option></select>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;">
+      <span class="filter-label">Event</span>
+      <select class="filter-select" style="min-width:140px;"><option>All Events</option><option>Stop</option><option>Breadcrumb</option><option>Driving Incident</option><option>Exception</option></select>
+    </div>
+  </div>
+</div>
+
+<!-- TABLE AREA -->
+<div class="table-area">
+  <div class="table-meta">
+    <span class="table-count">8 media instances · Today, 16 Apr 2026</span>
+    <div class="bulk-actions">
+      <button class="btn btn-outline btn-sm">
+        <svg class="icon" width="13" height="13" stroke="var(--icon)"><use href="#ic-download"/></svg>
+        Download selected
+      </button>
+      <button class="btn btn-danger btn-sm">
+        <svg class="icon" width="13" height="13" stroke="#DC2626"><use href="#ic-trash"/></svg>
+        Delete selected
+      </button>
+    </div>
+  </div>
+
+  <table class="media-table">
+    <thead>
+      <tr>
+        <th style="width:28px;"><input type="checkbox" style="margin:0;cursor:pointer;accent-color:var(--navy);"></th>
+        <th style="width:24px;"></th>
+        <th style="width:96px;">Cameras</th>
+        <th>Event / Location</th>
+        <th class="sortable sorted" onclick="sortBy(this)">
+          Date <svg class="icon" width="10" height="12" stroke="var(--navy)" style="margin-left:3px;vertical-align:-2px"><use href="#ic-sort-desc"/></svg>
+        </th>
+        <th class="sortable" onclick="sortBy(this)">
+          Vehicle <svg class="icon" width="10" height="12" stroke="var(--icon)" style="margin-left:3px;vertical-align:-2px"><use href="#ic-sort"/></svg>
+        </th>
+        <th class="sortable" onclick="sortBy(this)">
+          Driver <svg class="icon" width="10" height="12" stroke="var(--icon)" style="margin-left:3px;vertical-align:-2px"><use href="#ic-sort"/></svg>
+        </th>
+        <th>Status</th>
+        <th style="width:140px;">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <!-- ROW 1 — Exception · 3 cameras · Available · EXPANDED -->
+      <tr class="instance-row expanded" onclick="toggleRow('r1')">
+        <td><input type="checkbox" checked style="accent-color:var(--navy);cursor:pointer;" onclick="event.stopPropagation()"></td>
+        <td><span class="expand-toggle" id="toggle-r1"><svg class="icon" width="12" height="12" stroke="var(--icon)"><use href="#ic-chevron-right"/></svg></span></td>
+        <td>
+          <div class="thumb-stack">
+            <div class="thumb thumb-road"><svg class="icon" width="18" height="18" stroke="var(--icon)"><use href="#ic-camera"/></svg></div>
+            <div class="thumb thumb-interior"><svg class="icon" width="18" height="18" stroke="var(--icon)"><use href="#ic-camera"/></svg></div>
+            <div class="thumb thumb-video"><svg class="icon" width="18" height="18" stroke="var(--icon)"><use href="#ic-video"/></svg></div>
+          </div>
+        </td>
+        <td>
+          <div class="instance-summary">
+            <div class="instance-event">
+              <svg class="icon" width="15" height="15" stroke="var(--icon)"><use href="#ic-exception"/></svg>
+              Exception — Contamination
+            </div>
+            <div class="instance-address">1204 Oak Street, Sacramento CA</div>
+          </div>
+        </td>
+        <td><div class="cell-datetime">Today</div><div class="cell-time">08:14 AM</div></td>
+        <td><div class="cell-vehicle-id">Truck 487225</div><div class="cell-route">SWRAG-05</div></td>
+        <td><span class="cell-driver">J. Smith</span></td>
+        <td><span class="badge badge-available"><svg class="icon" width="8" height="8"><use href="#ic-dot-green"/></svg> Available</span></td>
+        <td>
+          <div class="row-actions">
+            <button class="icon-btn view" onclick="openDetail(event)">
+              <svg class="icon" width="14" height="14"><use href="#ic-eye"/></svg> View all
+            </button>
+            <button class="icon-btn icon-only" title="Download"><svg class="icon" width="14" height="14"><use href="#ic-download"/></svg></button>
+            <button class="icon-btn icon-only" title="Copy link"><svg class="icon" width="14" height="14"><use href="#ic-link"/></svg></button>
+          </div>
+        </td>
+      </tr>
+      <!-- Child rows r1 -->
+      <tr class="child-row" id="children-r1">
+        <td colspan="2"></td>
+        <td><div class="child-thumb thumb-road"><svg class="icon" width="15" height="15" stroke="var(--icon)"><use href="#ic-camera"/></svg></div></td>
+        <td colspan="4"><span class="child-cam-label">Road-facing</span> &nbsp;·&nbsp; <span class="child-type-label">Image · Expires 30 Apr</span></td>
+        <td><span class="badge badge-available"><svg class="icon" width="8" height="8"><use href="#ic-dot-green"/></svg> Available</span></td>
+        <td><div class="row-actions"><button class="icon-btn icon-only"><svg class="icon" width="14" height="14"><use href="#ic-eye"/></svg></button><button class="icon-btn icon-only"><svg class="icon" width="14" height="14"><use href="#ic-download"/></svg></button></div></td>
+      </tr>
+      <tr class="child-row" id="children-r1">
+        <td colspan="2"></td>
+        <td><div class="child-thumb thumb-interior"><svg class="icon" width="15" height="15" stroke="var(--icon)"><use href="#ic-camera"/></svg></div></td>
+        <td colspan="4"><span class="child-cam-label">Interior</span> &nbsp;·&nbsp; <span class="child-type-label">Image · Expires 30 Apr</span></td>
+        <td><span class="badge badge-available"><svg class="icon" width="8" height="8"><use href="#ic-dot-green"/></svg> Available</span></td>
+        <td><div class="row-actions"><button class="icon-btn icon-only"><svg class="icon" width="14" height="14"><use href="#ic-eye"/></svg></button><button class="icon-btn icon-only"><svg class="icon" width="14" height="14"><use href="#ic-download"/></svg></button></div></td>
+      </tr>
+      <tr class="child-row" id="children-r1">
+        <td colspan="2"></td>
+        <td><div class="child-thumb thumb-video"><svg class="icon" width="15" height="15" stroke="var(--icon)"><use href="#ic-play"/></svg></div></td>
+        <td colspan="4"><span class="child-cam-label">Road-facing</span> &nbsp;·&nbsp; <span class="child-type-label">Video · 30s</span> &nbsp;&nbsp; <span class="expiry-chip"><svg class="icon" width="11" height="11" stroke="#92400E"><use href="#ic-clock"/></svg> Expires in 3h</span></td>
+        <td><span class="badge badge-expiring"><svg class="icon" width="8" height="8"><use href="#ic-dot-amber"/></svg> Expiring</span></td>
+        <td><div class="row-actions"><button class="icon-btn icon-only"><svg class="icon" width="14" height="14"><use href="#ic-eye"/></svg></button><button class="icon-btn icon-only"><svg class="icon" width="14" height="14"><use href="#ic-download"/></svg></button></div></td>
+      </tr>
+      <tr class="request-more-tr" id="children-r1">
+        <td colspan="9">
+          <div class="request-more-inline">
+            <span class="rm-label"><svg class="icon" width="12" height="12" stroke="var(--navy)"><use href="#ic-plus"/></svg> Request more:</span>
+            <select class="rm-select"><option>Select camera…</option><option>Rear-facing</option></select>
+            <select class="rm-select"><option>Image</option><option>Video</option></select>
+            <select class="rm-select"><option>30 sec</option><option>10 sec</option><option>1 min</option></select>
+            <button class="rm-btn">Request</button>
+          </div>
+        </td>
+      </tr>
+
+      <!-- ROW 2 — Hard Braking · 1 video · Expiring -->
+      <tr class="instance-row" onclick="toggleRow('r2')">
+        <td><input type="checkbox" style="accent-color:var(--navy);cursor:pointer;" onclick="event.stopPropagation()"></td>
+        <td><span class="expand-toggle" id="toggle-r2"><svg class="icon" width="12" height="12" stroke="var(--icon)"><use href="#ic-chevron-right"/></svg></span></td>
+        <td><div class="thumb-stack"><div class="thumb thumb-video"><svg class="icon" width="18" height="18" stroke="var(--icon)"><use href="#ic-play"/></svg></div></div></td>
+        <td>
+          <div class="instance-summary">
+            <div class="instance-event"><svg class="icon" width="15" height="15" stroke="var(--icon)"><use href="#ic-incident"/></svg> Hard Braking</div>
+            <div class="instance-address">892 K Street, Sacramento CA</div>
+          </div>
+        </td>
+        <td><div class="cell-datetime">Today</div><div class="cell-time">07:52 AM</div></td>
+        <td><div class="cell-vehicle-id">Truck 112A</div><div class="cell-route">SWRAG-03</div></td>
+        <td><span class="cell-driver">M. Torres</span></td>
+        <td><span class="badge badge-expiring"><svg class="icon" width="8" height="8"><use href="#ic-dot-amber"/></svg> Expiring 3h</span></td>
+        <td>
+          <div class="row-actions">
+            <button class="icon-btn view" onclick="openDetail(event)"><svg class="icon" width="14" height="14"><use href="#ic-eye"/></svg> View all</button>
+            <button class="icon-btn icon-only"><svg class="icon" width="14" height="14"><use href="#ic-download"/></svg></button>
+            <button class="icon-btn icon-only"><svg class="icon" width="14" height="14"><use href="#ic-link"/></svg></button>
+          </div>
+        </td>
+      </tr>
+      <tr class="child-row" id="children-r2" style="display:none">
+        <td colspan="2"></td>
+        <td><div class="child-thumb thumb-video"><svg class="icon" width="15" height="15" stroke="var(--icon)"><use href="#ic-play"/></svg></div></td>
+        <td colspan="4"><span class="child-cam-label">Road-facing</span> &nbsp;·&nbsp; <span class="child-type-label">Video · 30s</span> &nbsp;&nbsp; <span class="expiry-chip"><svg class="icon" width="11" height="11" stroke="#92400E"><use href="#ic-clock"/></svg> Expires in 3h</span></td>
+        <td><span class="badge badge-expiring"><svg class="icon" width="8" height="8"><use href="#ic-dot-amber"/></svg> Expiring</span></td>
+        <td><div class="row-actions"><button class="icon-btn icon-only"><svg class="icon" width="14" height="14"><use href="#ic-eye"/></svg></button><button class="icon-btn icon-only"><svg class="icon" width="14" height="14"><use href="#ic-download"/></svg></button></div></td>
+      </tr>
+      <tr class="request-more-tr" id="children-r2" style="display:none">
+        <td colspan="9"><div class="request-more-inline"><span class="rm-label"><svg class="icon" width="12" height="12" stroke="var(--navy)"><use href="#ic-plus"/></svg> Request more:</span><select class="rm-select"><option>Select camera…</option><option>Interior</option><option>Rear-facing</option></select><select class="rm-select"><option>Image</option><option>Video</option></select><select class="rm-select"><option>30 sec</option><option>10 sec</option><option>1 min</option></select><button class="rm-btn">Request</button></div></td>
+      </tr>
+
+      <!-- ROW 3 — Stop · Pending -->
+      <tr class="instance-row" onclick="toggleRow('r3')">
+        <td><input type="checkbox" style="accent-color:var(--navy);cursor:pointer;" onclick="event.stopPropagation()"></td>
+        <td><span class="expand-toggle" id="toggle-r3"><svg class="icon" width="12" height="12" stroke="var(--icon)"><use href="#ic-chevron-right"/></svg></span></td>
+        <td><div class="thumb-stack"><div class="thumb thumb-pending"><svg class="icon" width="18" height="18" stroke="var(--icon)"><use href="#ic-pending"/></svg></div></div></td>
+        <td>
+          <div class="instance-summary">
+            <div class="instance-event"><svg class="icon" width="15" height="15" stroke="var(--icon)"><use href="#ic-stop"/></svg> Stop</div>
+            <div class="instance-address">3310 Florin Road, Sacramento CA</div>
+          </div>
+        </td>
+        <td><div class="cell-datetime">Today</div><div class="cell-time">09:03 AM</div></td>
+        <td><div class="cell-vehicle-id">Truck 487225</div><div class="cell-route">SWRAG-05</div></td>
+        <td><span class="cell-driver">J. Smith</span></td>
+        <td><span class="badge badge-pending"><svg class="icon" width="8" height="8"><use href="#ic-dot-amber"/></svg> Pending</span></td>
+        <td>
+          <div class="row-actions">
+            <button class="icon-btn view disabled"><svg class="icon" width="14" height="14"><use href="#ic-eye"/></svg> View all</button>
+            <button class="icon-btn icon-only disabled"><svg class="icon" width="14" height="14"><use href="#ic-download"/></svg></button>
+            <button class="icon-btn icon-only"><svg class="icon" width="14" height="14"><use href="#ic-link"/></svg></button>
+          </div>
+        </td>
+      </tr>
+      <tr class="child-row" id="children-r3" style="display:none">
+        <td colspan="2"></td>
+        <td><div class="child-thumb thumb-pending"><svg class="icon" width="15" height="15" stroke="var(--icon)"><use href="#ic-pending"/></svg></div></td>
+        <td colspan="4"><span class="child-cam-label">Road-facing</span> &nbsp;·&nbsp; <span class="child-type-label">Image · Retrieving…</span></td>
+        <td><span class="badge badge-pending"><svg class="icon" width="8" height="8"><use href="#ic-dot-amber"/></svg> Pending</span></td>
+        <td></td>
+      </tr>
+
+      <!-- ROW 4 — Exception · Failed -->
+      <tr class="instance-row" onclick="toggleRow('r4')">
+        <td><input type="checkbox" style="accent-color:var(--navy);cursor:pointer;" onclick="event.stopPropagation()"></td>
+        <td><span class="expand-toggle" id="toggle-r4"><svg class="icon" width="12" height="12" stroke="var(--icon)"><use href="#ic-chevron-right"/></svg></span></td>
+        <td><div class="thumb-stack"><div class="thumb thumb-failed"><svg class="icon" width="18" height="18" stroke="#FCA5A5"><use href="#ic-camera"/></svg></div></div></td>
+        <td>
+          <div class="instance-summary">
+            <div class="instance-event"><svg class="icon" width="15" height="15" stroke="var(--icon)"><use href="#ic-exception"/></svg> Exception</div>
+            <div class="instance-address">4501 Watt Avenue, Sacramento CA</div>
+          </div>
+        </td>
+        <td><div class="cell-datetime">Today</div><div class="cell-time">06:38 AM</div></td>
+        <td><div class="cell-vehicle-id">Truck 319B</div><div class="cell-route">SWRAG-07</div></td>
+        <td><span class="cell-driver">R. Davis</span></td>
+        <td><span class="badge badge-failed"><svg class="icon" width="8" height="8"><use href="#ic-dot-red"/></svg> Failed</span></td>
+        <td>
+          <div class="row-actions">
+            <button class="icon-btn retry"><svg class="icon" width="14" height="14"><use href="#ic-retry"/></svg> Retry</button>
+            <button class="icon-btn icon-only disabled"><svg class="icon" width="14" height="14"><use href="#ic-download"/></svg></button>
+            <button class="icon-btn icon-only"><svg class="icon" width="14" height="14"><use href="#ic-link"/></svg></button>
+          </div>
+        </td>
+      </tr>
+
+      <!-- ROW 5 — Breadcrumb · Available -->
+      <tr class="instance-row" onclick="toggleRow('r5')">
+        <td><input type="checkbox" style="accent-color:var(--navy);cursor:pointer;" onclick="event.stopPropagation()"></td>
+        <td><span class="expand-toggle" id="toggle-r5"><svg class="icon" width="12" height="12" stroke="var(--icon)"><use href="#ic-chevron-right"/></svg></span></td>
+        <td><div class="thumb-stack"><div class="thumb thumb-road"><svg class="icon" width="18" height="18" stroke="var(--icon)"><use href="#ic-camera"/></svg></div></div></td>
+        <td>
+          <div class="instance-summary">
+            <div class="instance-event"><svg class="icon" width="15" height="15" stroke="var(--icon)"><use href="#ic-breadcrumb"/></svg> Breadcrumb</div>
+            <div class="instance-address">1800 27th Ave, Sacramento CA</div>
+          </div>
+        </td>
+        <td><div class="cell-datetime">Today</div><div class="cell-time">10:21 AM</div></td>
+        <td><div class="cell-vehicle-id">Truck 208C</div><div class="cell-route">SWRAG-02</div></td>
+        <td><span class="cell-driver">L. Park</span></td>
+        <td><span class="badge badge-available"><svg class="icon" width="8" height="8"><use href="#ic-dot-green"/></svg> Available</span></td>
+        <td>
+          <div class="row-actions">
+            <button class="icon-btn view" onclick="openDetail(event)"><svg class="icon" width="14" height="14"><use href="#ic-eye"/></svg> View all</button>
+            <button class="icon-btn icon-only"><svg class="icon" width="14" height="14"><use href="#ic-download"/></svg></button>
+            <button class="icon-btn icon-only"><svg class="icon" width="14" height="14"><use href="#ic-link"/></svg></button>
+          </div>
+        </td>
+      </tr>
+
+      <!-- ROW 6 — Driving Incident · Expired -->
+      <tr class="instance-row" style="opacity:0.55;" onclick="toggleRow('r6')">
+        <td><input type="checkbox" style="accent-color:var(--navy);cursor:pointer;" onclick="event.stopPropagation()"></td>
+        <td><span class="expand-toggle" id="toggle-r6"><svg class="icon" width="12" height="12" stroke="var(--icon)"><use href="#ic-chevron-right"/></svg></span></td>
+        <td><div class="thumb-stack"><div class="thumb thumb-expired"><svg class="icon" width="18" height="18" stroke="var(--icon)"><use href="#ic-lock"/></svg></div></div></td>
+        <td>
+          <div class="instance-summary">
+            <div class="instance-event"><svg class="icon" width="15" height="15" stroke="var(--icon)"><use href="#ic-incident"/></svg> Driving Incident</div>
+            <div class="instance-address">550 Howe Ave, Sacramento CA</div>
+          </div>
+        </td>
+        <td><div class="cell-datetime">Yesterday</div><div class="cell-time">11:05 PM</div></td>
+        <td><div class="cell-vehicle-id">Truck 112A</div><div class="cell-route">SWRAG-03</div></td>
+        <td><span class="cell-driver">M. Torres</span></td>
+        <td><span class="badge badge-expired">Expired</span></td>
+        <td>
+          <div class="row-actions">
+            <button class="icon-btn view disabled"><svg class="icon" width="14" height="14"><use href="#ic-eye"/></svg> View all</button>
+            <button class="icon-btn icon-only disabled"><svg class="icon" width="14" height="14"><use href="#ic-download"/></svg></button>
+            <button class="icon-btn icon-only"><svg class="icon" width="14" height="14"><use href="#ic-link"/></svg></button>
+          </div>
+        </td>
+      </tr>
+
+      <!-- ROW 7 — Exception · Multi · Available -->
+      <tr class="instance-row" onclick="toggleRow('r7')">
+        <td><input type="checkbox" style="accent-color:var(--navy);cursor:pointer;" onclick="event.stopPropagation()"></td>
+        <td><span class="expand-toggle" id="toggle-r7"><svg class="icon" width="12" height="12" stroke="var(--icon)"><use href="#ic-chevron-right"/></svg></span></td>
+        <td>
+          <div class="thumb-stack">
+            <div class="thumb thumb-road"><svg class="icon" width="18" height="18" stroke="var(--icon)"><use href="#ic-camera"/></svg></div>
+            <div class="thumb thumb-video"><svg class="icon" width="18" height="18" stroke="var(--icon)"><use href="#ic-play"/></svg></div>
+            <div class="thumb-more">+1</div>
+          </div>
+        </td>
+        <td>
+          <div class="instance-summary">
+            <div class="instance-event"><svg class="icon" width="15" height="15" stroke="var(--icon)"><use href="#ic-exception"/></svg> Exception — Hot Load</div>
+            <div class="instance-address">788 Richards Blvd, Sacramento CA</div>
+          </div>
+        </td>
+        <td><div class="cell-datetime">Today</div><div class="cell-time">11:47 AM</div></td>
+        <td><div class="cell-vehicle-id">Truck 487225</div><div class="cell-route">SWRAG-05</div></td>
+        <td><span class="cell-driver">J. Smith</span></td>
+        <td><span class="badge badge-available"><svg class="icon" width="8" height="8"><use href="#ic-dot-green"/></svg> Available</span></td>
+        <td>
+          <div class="row-actions">
+            <button class="icon-btn view" onclick="openDetail(event)"><svg class="icon" width="14" height="14"><use href="#ic-eye"/></svg> View all</button>
+            <button class="icon-btn icon-only"><svg class="icon" width="14" height="14"><use href="#ic-download"/></svg></button>
+            <button class="icon-btn icon-only"><svg class="icon" width="14" height="14"><use href="#ic-link"/></svg></button>
+          </div>
+        </td>
+      </tr>
+
+      <!-- ROW 8 — Stop · Available -->
+      <tr class="instance-row" onclick="toggleRow('r8')">
+        <td><input type="checkbox" style="accent-color:var(--navy);cursor:pointer;" onclick="event.stopPropagation()"></td>
+        <td><span class="expand-toggle" id="toggle-r8"><svg class="icon" width="12" height="12" stroke="var(--icon)"><use href="#ic-chevron-right"/></svg></span></td>
+        <td><div class="thumb-stack"><div class="thumb thumb-road"><svg class="icon" width="18" height="18" stroke="var(--icon)"><use href="#ic-camera"/></svg></div></div></td>
+        <td>
+          <div class="instance-summary">
+            <div class="instance-event"><svg class="icon" width="15" height="15" stroke="var(--icon)"><use href="#ic-stop"/></svg> Stop</div>
+            <div class="instance-address">2301 Del Paso Blvd, Sacramento CA</div>
+          </div>
+        </td>
+        <td><div class="cell-datetime">Today</div><div class="cell-time">09:33 AM</div></td>
+        <td><div class="cell-vehicle-id">Truck 319B</div><div class="cell-route">SWRAG-07</div></td>
+        <td><span class="cell-driver">R. Davis</span></td>
+        <td><span class="badge badge-available"><svg class="icon" width="8" height="8"><use href="#ic-dot-green"/></svg> Available</span></td>
+        <td>
+          <div class="row-actions">
+            <button class="icon-btn view" onclick="openDetail(event)"><svg class="icon" width="14" height="14"><use href="#ic-eye"/></svg> View all</button>
+            <button class="icon-btn icon-only"><svg class="icon" width="14" height="14"><use href="#ic-download"/></svg></button>
+            <button class="icon-btn icon-only"><svg class="icon" width="14" height="14"><use href="#ic-link"/></svg></button>
+          </div>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>
+
+<!-- DETAIL SLIDE-IN PANEL -->
+<div class="detail-overlay" id="detailOverlay" onclick="closeDetail()"></div>
+<div class="detail-panel" id="detailPanel">
+  <div class="detail-header">
+    <div>
+      <div class="detail-title">Exception — Contamination · Truck 487225</div>
+      <div class="detail-subtitle">1204 Oak Street, Sacramento CA · Today 08:14 AM · SWRAG-05 · J. Smith</div>
+    </div>
+    <button class="detail-close" onclick="closeDetail()">
+      <svg class="icon" width="13" height="13" stroke="white"><use href="#ic-close"/></svg>
+    </button>
+  </div>
+  <div class="detail-tabs">
+    <div class="detail-tab active">
+      <svg class="icon" width="13" height="13" stroke="var(--navy)"><use href="#ic-camera"/></svg>
+      Road-facing <span class="tab-dot tab-dot-green"></span>
+    </div>
+    <div class="detail-tab">
+      <svg class="icon" width="13" height="13" stroke="var(--icon)"><use href="#ic-camera"/></svg>
+      Interior <span class="tab-dot tab-dot-green"></span>
+    </div>
+    <div class="detail-tab">
+      <svg class="icon" width="13" height="13" stroke="var(--icon)"><use href="#ic-play"/></svg>
+      Video · Road-facing <span class="tab-dot tab-dot-amber"></span>
+    </div>
+    <div class="detail-tab-add">
+      <svg class="icon" width="12" height="12" stroke="var(--green)"><use href="#ic-plus"/></svg>
+      Request more
+    </div>
+  </div>
+  <div class="detail-body">
+    <div class="detail-viewer">
+      <svg class="icon" width="64" height="64" stroke="rgba(255,255,255,0.15)"><use href="#ic-camera"/></svg>
+      <div class="viewer-cam-label">
+        <svg class="icon" width="11" height="11" stroke="rgba(255,255,255,0.7)"><use href="#ic-camera"/></svg>
+        Road-facing · 08:14:22 AM
+      </div>
+      <div class="viewer-nav">
+        <button class="viewer-nav-btn">‹</button>
+        <button class="viewer-nav-btn">›</button>
+      </div>
+    </div>
+    <div class="detail-sidebar">
+      <div class="sidebar-block">
+        <div class="sidebar-block-title">Instance Details</div>
+        <div class="sidebar-field"><span class="sidebar-key">Vehicle</span><span class="sidebar-val">Truck 487225</span></div>
+        <div class="sidebar-field"><span class="sidebar-key">Driver</span><span class="sidebar-val">J. Smith</span></div>
+        <div class="sidebar-field">
+          <span class="sidebar-key">Route</span>
+          <a class="sidebar-link">SWRAG-05 <svg class="icon" width="10" height="10" stroke="var(--green)"><use href="#ic-external"/></svg></a>
+        </div>
+        <div class="sidebar-field">
+          <span class="sidebar-key">Event</span>
+          <a class="sidebar-link">Exception #4812 <svg class="icon" width="10" height="10" stroke="var(--green)"><use href="#ic-external"/></svg></a>
+        </div>
+        <div class="sidebar-field"><span class="sidebar-key">Address</span><span class="sidebar-val">1204 Oak St, Sacramento</span></div>
+      </div>
+      <div class="sidebar-block">
+        <div class="sidebar-block-title">Retention</div>
+        <div class="sidebar-field"><span class="sidebar-key">Images</span><span class="sidebar-val">Expires 30 Apr</span></div>
+        <div class="sidebar-field">
+          <span class="sidebar-key">Video</span>
+          <span class="expiry-chip"><svg class="icon" width="11" height="11" stroke="#92400E"><use href="#ic-clock"/></svg> Expires in 3h</span>
+        </div>
+        <div class="dl-row">
+          <button class="dl-btn">
+            <svg class="icon" width="13" height="13"><use href="#ic-download"/></svg> All views
+          </button>
+          <button class="dl-btn primary">
+            <svg class="icon" width="13" height="13"><use href="#ic-download"/></svg> This view
+          </button>
+        </div>
+      </div>
+      <div class="request-more-panel">
+        <div class="rm-title">
+          <svg class="icon" width="13" height="13" stroke="var(--text-primary)"><use href="#ic-plus"/></svg>
+          Request more from this instance
+        </div>
+        <div class="rm-field">
+          <div class="rm-field-label">Camera</div>
+          <select class="rm-field-select"><option>Select camera…</option><option>Rear-facing (not yet requested)</option></select>
+        </div>
+        <div class="rm-pair">
+          <div class="rm-field">
+            <div class="rm-field-label">Type</div>
+            <select class="rm-field-select"><option>Image</option><option>Video</option></select>
+          </div>
+          <div class="rm-field">
+            <div class="rm-field-label">Duration</div>
+            <select class="rm-field-select"><option>30 sec</option><option>10 sec</option><option>1 min</option></select>
+          </div>
+        </div>
+        <button class="rm-submit">
+          <svg class="icon" width="13" height="13" stroke="white"><use href="#ic-camera"/></svg>
+          Request
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function toggleRow(id) {
+    const toggle = document.getElementById('toggle-' + id);
+    const row = toggle.closest('tr');
+    const children = document.querySelectorAll('[id="children-' + id + '"]');
+    const isExpanded = row.classList.contains('expanded');
+    row.classList.toggle('expanded', !isExpanded);
+    children.forEach(c => c.style.display = isExpanded ? 'none' : '');
+  }
+
+  function toggleMoreFilters(btn) {
+    const panel = document.getElementById('moreFiltersPanel');
+    panel.classList.toggle('open');
+    btn.innerHTML = panel.classList.contains('open')
+      ? `<svg class="icon" width="14" height="14" stroke="var(--text-secondary)"><use href="#ic-filter"/></svg> Fewer filters`
+      : `<svg class="icon" width="14" height="14" stroke="var(--text-secondary)"><use href="#ic-filter"/></svg> More filters`;
+  }
+
+  function openDetail(e) {
+    e.stopPropagation();
+    document.getElementById('detailOverlay').classList.add('open');
+    document.getElementById('detailPanel').classList.add('open');
+  }
+  function closeDetail() {
+    document.getElementById('detailOverlay').classList.remove('open');
+    document.getElementById('detailPanel').classList.remove('open');
+  }
+
+  function sortBy(th) {
+    document.querySelectorAll('th.sortable').forEach(t => {
+      if (t !== th) {
+        t.classList.remove('sorted');
+        t.querySelector('svg use').setAttribute('href', '#ic-sort');
+        t.querySelector('svg').setAttribute('stroke', 'var(--icon)');
+      }
+    });
+    th.classList.add('sorted');
+    th.querySelector('svg use').setAttribute('href', '#ic-sort-desc');
+    th.querySelector('svg').setAttribute('stroke', 'var(--navy)');
+  }
+</script>
+</body>
+</html>
