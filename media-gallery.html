@@ -113,7 +113,7 @@
   .sub-link.active { color: var(--green); border-bottom-color: var(--green); font-weight: 500; }
 
   /* ─── PAGE SHELL ─── */
-  .page { padding: 28px 32px 60px; max-width: 1440px; }
+  .page { padding: 28px 32px 60px; max-width: 1440px; margin: 0 auto; }
 
   .page-header {
     display: flex;
@@ -452,8 +452,8 @@
     letter-spacing: 0.04em;
     text-transform: uppercase;
   }
-  .thumb-img  { background: #DBEAFE; color: #1E40AF; }
-  .thumb-vid  { background: #F3E8FF; color: #6B21A8; }
+  .thumb-img  { background: transparent; }
+  .thumb-vid  { background: transparent; }
   .thumb-pend { background: var(--border); color: #9CA3AF; }
 
   .mi-type {
@@ -880,13 +880,6 @@
       <option>Videos</option>
     </select>
 
-    <!-- Camera: road-facing only for now — no rear-facing per 3 Amigos -->
-    <select class="filter-select" title="Camera">
-      <option>All Cameras</option>
-      <option>Road-facing</option>
-      <option>Interior</option>
-    </select>
-
     <select class="filter-select" title="Status">
       <option>All Statuses</option>
       <option>Available</option>
@@ -915,7 +908,6 @@
     <thead>
       <tr>
         <th style="width:28px;"></th>
-        <th style="width:60px;">CAMERAS</th>
         <th>EVENT / LOCATION</th>
         <th style="width:130px;">EVENT TIME<br><span style="font-size:9px;font-weight:300;color:#C4C8D1;">↓ image timestamp</span></th>
         <th style="width:150px;">VEHICLE</th>
@@ -931,10 +923,6 @@
         <td colspan="8">
           <div class="group-header" onclick="toggleRow(this)">
             <span class="group-expand open">▶</span>
-            <div class="group-cameras">
-              <div class="cam-icon road" title="Road-facing">R</div>
-              <div class="cam-icon int"  title="Interior">I</div>
-            </div>
             <div class="group-event">
               <div class="event-type">Exception — Contamination</div>
               <div class="event-address">1204 Oak Street, Sacramento CA</div>
@@ -958,9 +946,9 @@
           <div class="media-items-container open">
             <!-- media item 1 -->
             <div class="media-item-row">
-              <div class="mi-thumb"><div class="thumb-box thumb-img">IMG</div></div>
+              <div class="mi-thumb"><div class="thumb-box thumb-img"><svg width="22" height="22" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#ci)"><path fill-rule="evenodd" clip-rule="evenodd" d="M31.5834 4.66666C31.5834 2.31945 29.6806 0.416656 27.3334 0.416656H4.66669C2.31948 0.416656 0.416687 2.31945 0.416687 4.66666V27.3333C0.416687 29.6806 2.31948 31.5833 4.66669 31.5833H27.3334C29.6806 31.5833 31.5834 29.6806 31.5834 27.3333V4.66666ZM28.75 4.66666C28.75 3.88426 28.1158 3.24999 27.3334 3.24999H4.66669C3.88429 3.24999 3.25002 3.88426 3.25002 4.66666V27.3333C3.25002 28.1157 3.88429 28.75 4.66669 28.75H27.3334C28.1158 28.75 28.75 28.1157 28.75 27.3333V4.66666Z" fill="#B4B4C4"/><path d="M5.80945 23.8216L11.923 12.6134C12.4599 11.629 13.8735 11.629 14.4104 12.6134L18.8992 20.843L20.4367 18.1525C20.9806 17.2008 22.3528 17.2008 22.8966 18.1525L26.1222 23.7972C26.6619 24.7415 25.9799 25.9167 24.8922 25.9167H7.05312C5.97779 25.9167 5.29452 24.7656 5.80945 23.8216Z" fill="#B4B4C4"/><path d="M24.5 10.3333C24.5 11.8981 23.2315 13.1667 21.6666 13.1667C20.1018 13.1667 18.8333 11.8981 18.8333 10.3333C18.8333 8.76853 20.1018 7.5 21.6666 7.5C23.2315 7.5 24.5 8.76853 24.5 10.3333Z" fill="#B4B4C4"/></g><defs><clipPath id="ci"><rect width="32" height="32" fill="white"/></clipPath></defs></svg></div></div>
               <div class="mi-type">
-                <div class="mi-type-label">Road-facing · Image</div>
+                <div class="mi-type-label">Image</div>
               </div>
               <div class="mi-timestamps">
                 <div class="mi-ts-event">08:14:22 AM</div>
@@ -969,16 +957,16 @@
               <div class="mi-expiry">Expires 20 May 2026</div>
               <div class="mi-status"><span class="badge badge-available">Available</span></div>
               <div class="mi-actions">
-                <button class="btn-view view-available" onclick="openLightbox(event,'Road-facing · Image','08:14:22 AM','Available','Expires 20 May 2026','Truck 487225','J. Smith','SWRAG-05','Exception #4812','1204 Oak St, Sacramento')"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Available</button>
-                <button class="btn btn-ghost btn-sm">⬇ Download</button>
-                <button class="btn btn-danger btn-sm">Delete</button>
+                <button class="btn-view view-available" onclick="openLightbox(event,'Image','08:14:22 AM','Available','Expires 20 May 2026','Truck 487225','J. Smith','SWRAG-05','Exception #4812','1204 Oak St, Sacramento')"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Available</button>
+                <button class="btn btn-sm" style="background:transparent;border:none;padding:0 6px;" title="Download"><svg width="22" height="22" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#cd)"><path d="M29.74 12.294H21.814V1H9.926V12.294H2L15.87 25.471L29.74 12.294ZM2 29.235V33H29.74V29.235H2Z" fill="#B4B4C4"/></g><defs><clipPath id="cd"><rect width="32" height="32" fill="white"/></clipPath></defs></svg></button>
+                <button class="btn btn-sm" style="background:transparent;border:none;padding:0 6px;" title="Delete"><svg width="22" height="22" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#cdel)"><path d="M27.82 10.332H5.323C4.593 10.332 4 9.735 4 9V7.665C4 6.929 4.592 6.332 5.323 6.332H9.293C9.293 4.378 9.7 3.237 10.606 2.324C11.512 1.41 12.642 1 14.58 1H18.562C20.502 1 21.631 1.41 22.536 2.324C23.442 3.237 23.85 4.378 23.85 6.332H27.82C28.55 6.332 29.143 6.929 29.143 7.665V9C29.143 9.736 28.55 10.333 27.82 10.333V10.332ZM20.547 4.328C20.2822 4.082 19.9677 3.89562 19.6248 3.78143C19.2819 3.66723 18.9184 3.62787 18.559 3.666H14.583C14.2237 3.62802 13.8605 3.66745 13.5178 3.78165C13.175 3.89584 12.8607 4.08214 12.596 4.328C12.3516 4.59693 12.1668 4.91449 12.0537 5.25986C11.9407 5.60523 11.9019 5.9706 11.94 6.332H21.203C21.2411 5.9706 21.2023 5.60523 21.0893 5.25986C20.9762 4.91449 20.7914 4.59693 20.547 4.328ZM26.49 11.666C26.5806 11.666 26.6703 11.6846 26.7534 11.7207C26.8365 11.7569 26.9112 11.8097 26.973 11.876C27.0353 11.9424 27.0833 12.0208 27.1143 12.1065C27.1452 12.1921 27.1584 12.2831 27.153 12.374L25.985 31.124C25.9545 31.6309 25.7319 32.1071 25.3625 32.4557C24.9932 32.8042 24.5048 32.9989 23.997 33H9.144C8.63632 32.9989 8.14814 32.8044 7.77882 32.4561C7.40949 32.1077 7.18677 31.6317 7.156 31.125L5.988 12.374C5.98246 12.283 5.99556 12.1917 6.02651 12.1059C6.05746 12.0201 6.10561 11.9415 6.168 11.875C6.22978 11.8087 6.30455 11.7559 6.38765 11.7197C6.47074 11.6836 6.56039 11.665 6.651 11.665H26.49V11.666Z" fill="#B4B4C4"/></g><defs><clipPath id="cdel"><rect width="32" height="32" fill="white"/></clipPath></defs></svg></button>
               </div>
             </div>
             <!-- media item 2 -->
             <div class="media-item-row">
-              <div class="mi-thumb"><div class="thumb-box thumb-img">IMG</div></div>
+              <div class="mi-thumb"><div class="thumb-box thumb-img"><svg width="22" height="22" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#ci)"><path fill-rule="evenodd" clip-rule="evenodd" d="M31.5834 4.66666C31.5834 2.31945 29.6806 0.416656 27.3334 0.416656H4.66669C2.31948 0.416656 0.416687 2.31945 0.416687 4.66666V27.3333C0.416687 29.6806 2.31948 31.5833 4.66669 31.5833H27.3334C29.6806 31.5833 31.5834 29.6806 31.5834 27.3333V4.66666ZM28.75 4.66666C28.75 3.88426 28.1158 3.24999 27.3334 3.24999H4.66669C3.88429 3.24999 3.25002 3.88426 3.25002 4.66666V27.3333C3.25002 28.1157 3.88429 28.75 4.66669 28.75H27.3334C28.1158 28.75 28.75 28.1157 28.75 27.3333V4.66666Z" fill="#B4B4C4"/><path d="M5.80945 23.8216L11.923 12.6134C12.4599 11.629 13.8735 11.629 14.4104 12.6134L18.8992 20.843L20.4367 18.1525C20.9806 17.2008 22.3528 17.2008 22.8966 18.1525L26.1222 23.7972C26.6619 24.7415 25.9799 25.9167 24.8922 25.9167H7.05312C5.97779 25.9167 5.29452 24.7656 5.80945 23.8216Z" fill="#B4B4C4"/><path d="M24.5 10.3333C24.5 11.8981 23.2315 13.1667 21.6666 13.1667C20.1018 13.1667 18.8333 11.8981 18.8333 10.3333C18.8333 8.76853 20.1018 7.5 21.6666 7.5C23.2315 7.5 24.5 8.76853 24.5 10.3333Z" fill="#B4B4C4"/></g><defs><clipPath id="ci"><rect width="32" height="32" fill="white"/></clipPath></defs></svg></div></div>
               <div class="mi-type">
-                <div class="mi-type-label">Interior · Image</div>
+                <div class="mi-type-label">Image</div>
               </div>
               <div class="mi-timestamps">
                 <div class="mi-ts-event">08:14:25 AM</div>
@@ -987,16 +975,16 @@
               <div class="mi-expiry">Expires 20 May 2026</div>
               <div class="mi-status"><span class="badge badge-available">Available</span></div>
               <div class="mi-actions">
-                <button class="btn-view view-available" onclick="openLightbox(event,'Interior · Image','08:14:25 AM','Available','Expires 20 May 2026','Truck 487225','J. Smith','SWRAG-05','Exception #4812','1204 Oak St, Sacramento')"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Available</button>
-                <button class="btn btn-ghost btn-sm">⬇ Download</button>
-                <button class="btn btn-danger btn-sm">Delete</button>
+                <button class="btn-view view-available" onclick="openLightbox(event,'Image','08:14:25 AM','Available','Expires 20 May 2026','Truck 487225','J. Smith','SWRAG-05','Exception #4812','1204 Oak St, Sacramento')"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Available</button>
+                <button class="btn btn-sm" style="background:transparent;border:none;padding:0 6px;" title="Download"><svg width="22" height="22" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#cd)"><path d="M29.74 12.294H21.814V1H9.926V12.294H2L15.87 25.471L29.74 12.294ZM2 29.235V33H29.74V29.235H2Z" fill="#B4B4C4"/></g><defs><clipPath id="cd"><rect width="32" height="32" fill="white"/></clipPath></defs></svg></button>
+                <button class="btn btn-sm" style="background:transparent;border:none;padding:0 6px;" title="Delete"><svg width="22" height="22" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#cdel)"><path d="M27.82 10.332H5.323C4.593 10.332 4 9.735 4 9V7.665C4 6.929 4.592 6.332 5.323 6.332H9.293C9.293 4.378 9.7 3.237 10.606 2.324C11.512 1.41 12.642 1 14.58 1H18.562C20.502 1 21.631 1.41 22.536 2.324C23.442 3.237 23.85 4.378 23.85 6.332H27.82C28.55 6.332 29.143 6.929 29.143 7.665V9C29.143 9.736 28.55 10.333 27.82 10.333V10.332ZM20.547 4.328C20.2822 4.082 19.9677 3.89562 19.6248 3.78143C19.2819 3.66723 18.9184 3.62787 18.559 3.666H14.583C14.2237 3.62802 13.8605 3.66745 13.5178 3.78165C13.175 3.89584 12.8607 4.08214 12.596 4.328C12.3516 4.59693 12.1668 4.91449 12.0537 5.25986C11.9407 5.60523 11.9019 5.9706 11.94 6.332H21.203C21.2411 5.9706 21.2023 5.60523 21.0893 5.25986C20.9762 4.91449 20.7914 4.59693 20.547 4.328ZM26.49 11.666C26.5806 11.666 26.6703 11.6846 26.7534 11.7207C26.8365 11.7569 26.9112 11.8097 26.973 11.876C27.0353 11.9424 27.0833 12.0208 27.1143 12.1065C27.1452 12.1921 27.1584 12.2831 27.153 12.374L25.985 31.124C25.9545 31.6309 25.7319 32.1071 25.3625 32.4557C24.9932 32.8042 24.5048 32.9989 23.997 33H9.144C8.63632 32.9989 8.14814 32.8044 7.77882 32.4561C7.40949 32.1077 7.18677 31.6317 7.156 31.125L5.988 12.374C5.98246 12.283 5.99556 12.1917 6.02651 12.1059C6.05746 12.0201 6.10561 11.9415 6.168 11.875C6.22978 11.8087 6.30455 11.7559 6.38765 11.7197C6.47074 11.6836 6.56039 11.665 6.651 11.665H26.49V11.666Z" fill="#B4B4C4"/></g><defs><clipPath id="cdel"><rect width="32" height="32" fill="white"/></clipPath></defs></svg></button>
               </div>
             </div>
             <!-- media item 3: video expiring -->
             <div class="media-item-row">
-              <div class="mi-thumb"><div class="thumb-box thumb-vid">VID</div></div>
+              <div class="mi-thumb"><div class="thumb-box thumb-vid"><svg width="22" height="19" viewBox="0 0 32 27" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16.003 8.05298C12.473 8.05298 9.60199 10.943 9.60199 14.496C9.60199 18.048 12.473 20.938 16.002 20.938C19.532 20.938 22.404 18.048 22.404 14.496C22.404 10.943 19.532 8.05298 16.003 8.05298Z" fill="#B4B4C4"/><path d="M29.445 5.369H24.9L22.766 0H9.24001L7.10701 5.37H6.40001V2.684H3.20001V5.368H2.56001C1.87892 5.37065 1.22674 5.64354 0.746732 6.12674C0.266724 6.60994 -0.00185066 7.26391 9.59964e-06 7.945V23.712C-0.00132151 24.3977 0.26932 25.056 0.75259 25.5424C1.23586 26.0289 1.89231 26.3038 2.57801 26.307H29.428C30.1135 26.3036 30.7697 26.0285 31.2528 25.5421C31.7358 25.0556 32.0063 24.3975 32.005 23.712V7.945C32.0066 7.26408 31.7379 6.61037 31.2579 6.12739C30.778 5.64441 30.1259 5.37165 29.445 5.369ZM5.33501 5.369H4.26601V3.759H5.33301V5.369H5.33501ZM16.003 24.159C10.708 24.159 6.40101 19.824 6.40101 14.496C6.40101 9.167 10.708 4.832 16.003 4.832C21.297 4.832 25.604 9.167 25.604 14.496C25.604 19.824 21.297 24.159 16.003 24.159ZM27.738 11.812C27.1705 11.8096 26.6271 11.5822 26.2271 11.1797C25.827 10.7772 25.6029 10.2325 25.604 9.665C25.604 8.481 26.561 7.518 27.738 7.518C28.915 7.518 29.872 8.481 29.872 9.665C29.8731 10.2325 29.649 10.7772 29.2489 11.1797C28.8489 11.5822 28.3055 11.8096 27.738 11.812Z" fill="#B4B4C4"/></svg></div></div>
               <div class="mi-type">
-                <div class="mi-type-label">Road-facing · Video</div>
+                <div class="mi-type-label">Video</div>
                 <div class="mi-duration">30 seconds</div>
               </div>
               <div class="mi-timestamps">
@@ -1006,9 +994,9 @@
               <div class="mi-expiry"><span class="expiring-soon">Expires in 3h</span></div>
               <div class="mi-status"><span class="badge badge-expiring">Expiring</span></div>
               <div class="mi-actions">
-                <button class="btn-view view-expiring" onclick="openLightbox(event,'Road-facing · Video (30s)','08:14:18 AM','Expiring','Expires in 3h','Truck 487225','J. Smith','SWRAG-05','Exception #4812','1204 Oak St, Sacramento')"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Expiring</button>
-                <button class="btn btn-ghost btn-sm">⬇ Download</button>
-                <button class="btn btn-danger btn-sm">Delete</button>
+                <button class="btn-view view-expiring" onclick="openLightbox(event,'Video (30s)','08:14:18 AM','Expiring','Expires in 3h','Truck 487225','J. Smith','SWRAG-05','Exception #4812','1204 Oak St, Sacramento')"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Expiring</button>
+                <button class="btn btn-sm" style="background:transparent;border:none;padding:0 6px;" title="Download"><svg width="22" height="22" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#cd)"><path d="M29.74 12.294H21.814V1H9.926V12.294H2L15.87 25.471L29.74 12.294ZM2 29.235V33H29.74V29.235H2Z" fill="#B4B4C4"/></g><defs><clipPath id="cd"><rect width="32" height="32" fill="white"/></clipPath></defs></svg></button>
+                <button class="btn btn-sm" style="background:transparent;border:none;padding:0 6px;" title="Delete"><svg width="22" height="22" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#cdel)"><path d="M27.82 10.332H5.323C4.593 10.332 4 9.735 4 9V7.665C4 6.929 4.592 6.332 5.323 6.332H9.293C9.293 4.378 9.7 3.237 10.606 2.324C11.512 1.41 12.642 1 14.58 1H18.562C20.502 1 21.631 1.41 22.536 2.324C23.442 3.237 23.85 4.378 23.85 6.332H27.82C28.55 6.332 29.143 6.929 29.143 7.665V9C29.143 9.736 28.55 10.333 27.82 10.333V10.332ZM20.547 4.328C20.2822 4.082 19.9677 3.89562 19.6248 3.78143C19.2819 3.66723 18.9184 3.62787 18.559 3.666H14.583C14.2237 3.62802 13.8605 3.66745 13.5178 3.78165C13.175 3.89584 12.8607 4.08214 12.596 4.328C12.3516 4.59693 12.1668 4.91449 12.0537 5.25986C11.9407 5.60523 11.9019 5.9706 11.94 6.332H21.203C21.2411 5.9706 21.2023 5.60523 21.0893 5.25986C20.9762 4.91449 20.7914 4.59693 20.547 4.328ZM26.49 11.666C26.5806 11.666 26.6703 11.6846 26.7534 11.7207C26.8365 11.7569 26.9112 11.8097 26.973 11.876C27.0353 11.9424 27.0833 12.0208 27.1143 12.1065C27.1452 12.1921 27.1584 12.2831 27.153 12.374L25.985 31.124C25.9545 31.6309 25.7319 32.1071 25.3625 32.4557C24.9932 32.8042 24.5048 32.9989 23.997 33H9.144C8.63632 32.9989 8.14814 32.8044 7.77882 32.4561C7.40949 32.1077 7.18677 31.6317 7.156 31.125L5.988 12.374C5.98246 12.283 5.99556 12.1917 6.02651 12.1059C6.05746 12.0201 6.10561 11.9415 6.168 11.875C6.22978 11.8087 6.30455 11.7559 6.38765 11.7197C6.47074 11.6836 6.56039 11.665 6.651 11.665H26.49V11.666Z" fill="#B4B4C4"/></g><defs><clipPath id="cdel"><rect width="32" height="32" fill="white"/></clipPath></defs></svg></button>
               </div>
             </div>
             <!-- request more -->
@@ -1038,9 +1026,6 @@
         <td colspan="8">
           <div class="group-header" onclick="toggleRow(this)">
             <span class="group-expand">▶</span>
-            <div class="group-cameras">
-              <div class="cam-icon road" title="Road-facing">R</div>
-            </div>
             <div class="group-event">
               <div class="event-type">Driving Incident — Hard Braking</div>
               <div class="event-address">892 K Street, Sacramento CA</div>
@@ -1063,9 +1048,9 @@
           </div>
           <div class="media-items-container">
             <div class="media-item-row">
-              <div class="mi-thumb"><div class="thumb-box thumb-vid">VID</div></div>
+              <div class="mi-thumb"><div class="thumb-box thumb-vid"><svg width="22" height="19" viewBox="0 0 32 27" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16.003 8.05298C12.473 8.05298 9.60199 10.943 9.60199 14.496C9.60199 18.048 12.473 20.938 16.002 20.938C19.532 20.938 22.404 18.048 22.404 14.496C22.404 10.943 19.532 8.05298 16.003 8.05298Z" fill="#B4B4C4"/><path d="M29.445 5.369H24.9L22.766 0H9.24001L7.10701 5.37H6.40001V2.684H3.20001V5.368H2.56001C1.87892 5.37065 1.22674 5.64354 0.746732 6.12674C0.266724 6.60994 -0.00185066 7.26391 9.59964e-06 7.945V23.712C-0.00132151 24.3977 0.26932 25.056 0.75259 25.5424C1.23586 26.0289 1.89231 26.3038 2.57801 26.307H29.428C30.1135 26.3036 30.7697 26.0285 31.2528 25.5421C31.7358 25.0556 32.0063 24.3975 32.005 23.712V7.945C32.0066 7.26408 31.7379 6.61037 31.2579 6.12739C30.778 5.64441 30.1259 5.37165 29.445 5.369ZM5.33501 5.369H4.26601V3.759H5.33301V5.369H5.33501ZM16.003 24.159C10.708 24.159 6.40101 19.824 6.40101 14.496C6.40101 9.167 10.708 4.832 16.003 4.832C21.297 4.832 25.604 9.167 25.604 14.496C25.604 19.824 21.297 24.159 16.003 24.159ZM27.738 11.812C27.1705 11.8096 26.6271 11.5822 26.2271 11.1797C25.827 10.7772 25.6029 10.2325 25.604 9.665C25.604 8.481 26.561 7.518 27.738 7.518C28.915 7.518 29.872 8.481 29.872 9.665C29.8731 10.2325 29.649 10.7772 29.2489 11.1797C28.8489 11.5822 28.3055 11.8096 27.738 11.812Z" fill="#B4B4C4"/></svg></div></div>
               <div class="mi-type">
-                <div class="mi-type-label">Road-facing · Video</div>
+                <div class="mi-type-label">Video</div>
                 <div class="mi-duration">30 seconds</div>
               </div>
               <div class="mi-timestamps">
@@ -1075,9 +1060,9 @@
               <div class="mi-expiry"><span class="expiring-soon">Expires in 3h</span></div>
               <div class="mi-status"><span class="badge badge-expiring">Expiring</span></div>
               <div class="mi-actions">
-                <button class="btn-view view-expiring" onclick="openLightbox(event,'Road-facing · Video (30s)','07:52:04 AM','Expiring','Expires in 3h','Truck 112A','M. Torres','SWRAG-03','Driving Incident','892 K Street, Sacramento CA')"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Expiring</button>
-                <button class="btn btn-ghost btn-sm">⬇ Download</button>
-                <button class="btn btn-danger btn-sm">Delete</button>
+                <button class="btn-view view-expiring" onclick="openLightbox(event,'Video (30s)','07:52:04 AM','Expiring','Expires in 3h','Truck 112A','M. Torres','SWRAG-03','Driving Incident','892 K Street, Sacramento CA')"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Expiring</button>
+                <button class="btn btn-sm" style="background:transparent;border:none;padding:0 6px;" title="Download"><svg width="22" height="22" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#cd)"><path d="M29.74 12.294H21.814V1H9.926V12.294H2L15.87 25.471L29.74 12.294ZM2 29.235V33H29.74V29.235H2Z" fill="#B4B4C4"/></g><defs><clipPath id="cd"><rect width="32" height="32" fill="white"/></clipPath></defs></svg></button>
+                <button class="btn btn-sm" style="background:transparent;border:none;padding:0 6px;" title="Delete"><svg width="22" height="22" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#cdel)"><path d="M27.82 10.332H5.323C4.593 10.332 4 9.735 4 9V7.665C4 6.929 4.592 6.332 5.323 6.332H9.293C9.293 4.378 9.7 3.237 10.606 2.324C11.512 1.41 12.642 1 14.58 1H18.562C20.502 1 21.631 1.41 22.536 2.324C23.442 3.237 23.85 4.378 23.85 6.332H27.82C28.55 6.332 29.143 6.929 29.143 7.665V9C29.143 9.736 28.55 10.333 27.82 10.333V10.332ZM20.547 4.328C20.2822 4.082 19.9677 3.89562 19.6248 3.78143C19.2819 3.66723 18.9184 3.62787 18.559 3.666H14.583C14.2237 3.62802 13.8605 3.66745 13.5178 3.78165C13.175 3.89584 12.8607 4.08214 12.596 4.328C12.3516 4.59693 12.1668 4.91449 12.0537 5.25986C11.9407 5.60523 11.9019 5.9706 11.94 6.332H21.203C21.2411 5.9706 21.2023 5.60523 21.0893 5.25986C20.9762 4.91449 20.7914 4.59693 20.547 4.328ZM26.49 11.666C26.5806 11.666 26.6703 11.6846 26.7534 11.7207C26.8365 11.7569 26.9112 11.8097 26.973 11.876C27.0353 11.9424 27.0833 12.0208 27.1143 12.1065C27.1452 12.1921 27.1584 12.2831 27.153 12.374L25.985 31.124C25.9545 31.6309 25.7319 32.1071 25.3625 32.4557C24.9932 32.8042 24.5048 32.9989 23.997 33H9.144C8.63632 32.9989 8.14814 32.8044 7.77882 32.4561C7.40949 32.1077 7.18677 31.6317 7.156 31.125L5.988 12.374C5.98246 12.283 5.99556 12.1917 6.02651 12.1059C6.05746 12.0201 6.10561 11.9415 6.168 11.875C6.22978 11.8087 6.30455 11.7559 6.38765 11.7197C6.47074 11.6836 6.56039 11.665 6.651 11.665H26.49V11.666Z" fill="#B4B4C4"/></g><defs><clipPath id="cdel"><rect width="32" height="32" fill="white"/></clipPath></defs></svg></button>
               </div>
             </div>
             <div class="request-more-row">
@@ -1101,9 +1086,6 @@
         <td colspan="8">
           <div class="group-header" onclick="toggleRow(this)">
             <span class="group-expand">▶</span>
-            <div class="group-cameras">
-              <div class="cam-icon road" title="Road-facing">R</div>
-            </div>
             <div class="group-event">
               <div class="event-type">Stop</div>
               <div class="event-address">3310 Florin Road, Sacramento CA</div>
@@ -1127,7 +1109,7 @@
           <div class="media-items-container">
             <div class="mi-pending-placeholder">
               <div class="spinner"></div>
-              Road-facing · Image · Retrieving from Samsara…
+              Image · Retrieving from Samsara…
             </div>
           </div>
         </td>
@@ -1138,9 +1120,6 @@
         <td colspan="8">
           <div class="group-header" onclick="toggleRow(this)">
             <span class="group-expand">▶</span>
-            <div class="group-cameras">
-              <div class="cam-icon road" title="Road-facing">R</div>
-            </div>
             <div class="group-event">
               <div class="event-type">Exception</div>
               <div class="event-address">4501 Watt Avenue, Sacramento CA</div>
@@ -1164,7 +1143,7 @@
           <div class="media-items-container">
             <div class="media-item-row">
               <div class="mi-thumb"><div class="thumb-box thumb-pend">ERR</div></div>
-              <div class="mi-type"><div class="mi-type-label">Road-facing · Image</div></div>
+              <div class="mi-type"><div class="mi-type-label">Image</div></div>
               <div class="mi-timestamps"><div class="mi-ts-event">—</div><div class="mi-ts-note">Retrieval failed</div></div>
               <div class="mi-expiry">—</div>
               <div class="mi-status"><span class="badge badge-failed">Failed</span></div>
@@ -1181,9 +1160,6 @@
         <td colspan="8">
           <div class="group-header" onclick="toggleRow(this)">
             <span class="group-expand">▶</span>
-            <div class="group-cameras">
-              <div class="cam-icon road" title="Road-facing">R</div>
-            </div>
             <div class="group-event">
               <div class="event-type">Breadcrumb</div>
               <div class="event-address">1800 27th Ave, Sacramento CA</div>
@@ -1206,15 +1182,15 @@
           </div>
           <div class="media-items-container">
             <div class="media-item-row">
-              <div class="mi-thumb"><div class="thumb-box thumb-img">IMG</div></div>
-              <div class="mi-type"><div class="mi-type-label">Road-facing · Image</div></div>
+              <div class="mi-thumb"><div class="thumb-box thumb-img"><svg width="22" height="22" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#ci)"><path fill-rule="evenodd" clip-rule="evenodd" d="M31.5834 4.66666C31.5834 2.31945 29.6806 0.416656 27.3334 0.416656H4.66669C2.31948 0.416656 0.416687 2.31945 0.416687 4.66666V27.3333C0.416687 29.6806 2.31948 31.5833 4.66669 31.5833H27.3334C29.6806 31.5833 31.5834 29.6806 31.5834 27.3333V4.66666ZM28.75 4.66666C28.75 3.88426 28.1158 3.24999 27.3334 3.24999H4.66669C3.88429 3.24999 3.25002 3.88426 3.25002 4.66666V27.3333C3.25002 28.1157 3.88429 28.75 4.66669 28.75H27.3334C28.1158 28.75 28.75 28.1157 28.75 27.3333V4.66666Z" fill="#B4B4C4"/><path d="M5.80945 23.8216L11.923 12.6134C12.4599 11.629 13.8735 11.629 14.4104 12.6134L18.8992 20.843L20.4367 18.1525C20.9806 17.2008 22.3528 17.2008 22.8966 18.1525L26.1222 23.7972C26.6619 24.7415 25.9799 25.9167 24.8922 25.9167H7.05312C5.97779 25.9167 5.29452 24.7656 5.80945 23.8216Z" fill="#B4B4C4"/><path d="M24.5 10.3333C24.5 11.8981 23.2315 13.1667 21.6666 13.1667C20.1018 13.1667 18.8333 11.8981 18.8333 10.3333C18.8333 8.76853 20.1018 7.5 21.6666 7.5C23.2315 7.5 24.5 8.76853 24.5 10.3333Z" fill="#B4B4C4"/></g><defs><clipPath id="ci"><rect width="32" height="32" fill="white"/></clipPath></defs></svg></div></div>
+              <div class="mi-type"><div class="mi-type-label">Image</div></div>
               <div class="mi-timestamps"><div class="mi-ts-event">10:21:07 AM</div><div class="mi-ts-note">Individual image timestamp</div></div>
               <div class="mi-expiry">Expires 20 May 2026</div>
               <div class="mi-status"><span class="badge badge-available">Available</span></div>
               <div class="mi-actions">
-                <button class="btn-view view-available" onclick="openLightbox(event,'Road-facing · Image','10:21:07 AM','Available','Expires 20 May 2026','Truck 208C','L. Park','SWRAG-02','Breadcrumb','1800 27th Ave, Sacramento CA')"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Available</button>
-                <button class="btn btn-ghost btn-sm">⬇ Download</button>
-                <button class="btn btn-danger btn-sm">Delete</button>
+                <button class="btn-view view-available" onclick="openLightbox(event,'Image','10:21:07 AM','Available','Expires 20 May 2026','Truck 208C','L. Park','SWRAG-02','Breadcrumb','1800 27th Ave, Sacramento CA')"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Available</button>
+                <button class="btn btn-sm" style="background:transparent;border:none;padding:0 6px;" title="Download"><svg width="22" height="22" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#cd)"><path d="M29.74 12.294H21.814V1H9.926V12.294H2L15.87 25.471L29.74 12.294ZM2 29.235V33H29.74V29.235H2Z" fill="#B4B4C4"/></g><defs><clipPath id="cd"><rect width="32" height="32" fill="white"/></clipPath></defs></svg></button>
+                <button class="btn btn-sm" style="background:transparent;border:none;padding:0 6px;" title="Delete"><svg width="22" height="22" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#cdel)"><path d="M27.82 10.332H5.323C4.593 10.332 4 9.735 4 9V7.665C4 6.929 4.592 6.332 5.323 6.332H9.293C9.293 4.378 9.7 3.237 10.606 2.324C11.512 1.41 12.642 1 14.58 1H18.562C20.502 1 21.631 1.41 22.536 2.324C23.442 3.237 23.85 4.378 23.85 6.332H27.82C28.55 6.332 29.143 6.929 29.143 7.665V9C29.143 9.736 28.55 10.333 27.82 10.333V10.332ZM20.547 4.328C20.2822 4.082 19.9677 3.89562 19.6248 3.78143C19.2819 3.66723 18.9184 3.62787 18.559 3.666H14.583C14.2237 3.62802 13.8605 3.66745 13.5178 3.78165C13.175 3.89584 12.8607 4.08214 12.596 4.328C12.3516 4.59693 12.1668 4.91449 12.0537 5.25986C11.9407 5.60523 11.9019 5.9706 11.94 6.332H21.203C21.2411 5.9706 21.2023 5.60523 21.0893 5.25986C20.9762 4.91449 20.7914 4.59693 20.547 4.328ZM26.49 11.666C26.5806 11.666 26.6703 11.6846 26.7534 11.7207C26.8365 11.7569 26.9112 11.8097 26.973 11.876C27.0353 11.9424 27.0833 12.0208 27.1143 12.1065C27.1452 12.1921 27.1584 12.2831 27.153 12.374L25.985 31.124C25.9545 31.6309 25.7319 32.1071 25.3625 32.4557C24.9932 32.8042 24.5048 32.9989 23.997 33H9.144C8.63632 32.9989 8.14814 32.8044 7.77882 32.4561C7.40949 32.1077 7.18677 31.6317 7.156 31.125L5.988 12.374C5.98246 12.283 5.99556 12.1917 6.02651 12.1059C6.05746 12.0201 6.10561 11.9415 6.168 11.875C6.22978 11.8087 6.30455 11.7559 6.38765 11.7197C6.47074 11.6836 6.56039 11.665 6.651 11.665H26.49V11.666Z" fill="#B4B4C4"/></g><defs><clipPath id="cdel"><rect width="32" height="32" fill="white"/></clipPath></defs></svg></button>
               </div>
             </div>
             <div class="request-more-row">
@@ -1235,9 +1211,6 @@
         <td colspan="8">
           <div class="group-header" onclick="toggleRow(this)" style="opacity:0.65;">
             <span class="group-expand">▶</span>
-            <div class="group-cameras">
-              <div class="cam-icon road" title="Road-facing">R</div>
-            </div>
             <div class="group-event">
               <div class="event-type">Driving Incident</div>
               <div class="event-address">550 Howe Ave, Sacramento CA</div>
@@ -1261,7 +1234,7 @@
           <div class="media-items-container">
             <div class="media-item-row" style="opacity:0.6;">
               <div class="mi-thumb"><div class="thumb-box thumb-pend">EXP</div></div>
-              <div class="mi-type"><div class="mi-type-label">Road-facing · Video · 30s</div></div>
+              <div class="mi-type"><div class="mi-type-label">Video · 30s</div></div>
               <div class="mi-timestamps"><div class="mi-ts-event">Yesterday 11:05 PM</div></div>
               <div class="mi-expiry">Expired 6 May 2026</div>
               <div class="mi-status"><span class="badge badge-expired">Expired</span></div>
@@ -1276,10 +1249,6 @@
         <td colspan="8">
           <div class="group-header" onclick="toggleRow(this)">
             <span class="group-expand">▶</span>
-            <div class="group-cameras">
-              <div class="cam-icon road" title="Road-facing">R</div>
-              <div class="cam-icon count" title="+1 more">+1</div>
-            </div>
             <div class="group-event">
               <div class="event-type">Exception — Hot Load</div>
               <div class="event-address">788 Richards Blvd, Sacramento CA</div>
@@ -1302,27 +1271,27 @@
           </div>
           <div class="media-items-container">
             <div class="media-item-row">
-              <div class="mi-thumb"><div class="thumb-box thumb-img">IMG</div></div>
-              <div class="mi-type"><div class="mi-type-label">Road-facing · Image</div></div>
+              <div class="mi-thumb"><div class="thumb-box thumb-img"><svg width="22" height="22" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#ci)"><path fill-rule="evenodd" clip-rule="evenodd" d="M31.5834 4.66666C31.5834 2.31945 29.6806 0.416656 27.3334 0.416656H4.66669C2.31948 0.416656 0.416687 2.31945 0.416687 4.66666V27.3333C0.416687 29.6806 2.31948 31.5833 4.66669 31.5833H27.3334C29.6806 31.5833 31.5834 29.6806 31.5834 27.3333V4.66666ZM28.75 4.66666C28.75 3.88426 28.1158 3.24999 27.3334 3.24999H4.66669C3.88429 3.24999 3.25002 3.88426 3.25002 4.66666V27.3333C3.25002 28.1157 3.88429 28.75 4.66669 28.75H27.3334C28.1158 28.75 28.75 28.1157 28.75 27.3333V4.66666Z" fill="#B4B4C4"/><path d="M5.80945 23.8216L11.923 12.6134C12.4599 11.629 13.8735 11.629 14.4104 12.6134L18.8992 20.843L20.4367 18.1525C20.9806 17.2008 22.3528 17.2008 22.8966 18.1525L26.1222 23.7972C26.6619 24.7415 25.9799 25.9167 24.8922 25.9167H7.05312C5.97779 25.9167 5.29452 24.7656 5.80945 23.8216Z" fill="#B4B4C4"/><path d="M24.5 10.3333C24.5 11.8981 23.2315 13.1667 21.6666 13.1667C20.1018 13.1667 18.8333 11.8981 18.8333 10.3333C18.8333 8.76853 20.1018 7.5 21.6666 7.5C23.2315 7.5 24.5 8.76853 24.5 10.3333Z" fill="#B4B4C4"/></g><defs><clipPath id="ci"><rect width="32" height="32" fill="white"/></clipPath></defs></svg></div></div>
+              <div class="mi-type"><div class="mi-type-label">Image</div></div>
               <div class="mi-timestamps"><div class="mi-ts-event">11:47:31 AM</div><div class="mi-ts-note">Individual image timestamp</div></div>
               <div class="mi-expiry">Expires 20 May 2026</div>
               <div class="mi-status"><span class="badge badge-available">Available</span></div>
               <div class="mi-actions">
-                <button class="btn-view view-available" onclick="openLightbox(event,'Road-facing · Image','11:47:31 AM','Available','Expires 20 May 2026','Truck 487225','J. Smith','SWRAG-05','Exception — Hot Load','788 Richards Blvd, Sacramento CA')"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Available</button>
-                <button class="btn btn-ghost btn-sm">⬇ Download</button>
-                <button class="btn btn-danger btn-sm">Delete</button>
+                <button class="btn-view view-available" onclick="openLightbox(event,'Image','11:47:31 AM','Available','Expires 20 May 2026','Truck 487225','J. Smith','SWRAG-05','Exception — Hot Load','788 Richards Blvd, Sacramento CA')"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Available</button>
+                <button class="btn btn-sm" style="background:transparent;border:none;padding:0 6px;" title="Download"><svg width="22" height="22" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#cd)"><path d="M29.74 12.294H21.814V1H9.926V12.294H2L15.87 25.471L29.74 12.294ZM2 29.235V33H29.74V29.235H2Z" fill="#B4B4C4"/></g><defs><clipPath id="cd"><rect width="32" height="32" fill="white"/></clipPath></defs></svg></button>
+                <button class="btn btn-sm" style="background:transparent;border:none;padding:0 6px;" title="Delete"><svg width="22" height="22" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#cdel)"><path d="M27.82 10.332H5.323C4.593 10.332 4 9.735 4 9V7.665C4 6.929 4.592 6.332 5.323 6.332H9.293C9.293 4.378 9.7 3.237 10.606 2.324C11.512 1.41 12.642 1 14.58 1H18.562C20.502 1 21.631 1.41 22.536 2.324C23.442 3.237 23.85 4.378 23.85 6.332H27.82C28.55 6.332 29.143 6.929 29.143 7.665V9C29.143 9.736 28.55 10.333 27.82 10.333V10.332ZM20.547 4.328C20.2822 4.082 19.9677 3.89562 19.6248 3.78143C19.2819 3.66723 18.9184 3.62787 18.559 3.666H14.583C14.2237 3.62802 13.8605 3.66745 13.5178 3.78165C13.175 3.89584 12.8607 4.08214 12.596 4.328C12.3516 4.59693 12.1668 4.91449 12.0537 5.25986C11.9407 5.60523 11.9019 5.9706 11.94 6.332H21.203C21.2411 5.9706 21.2023 5.60523 21.0893 5.25986C20.9762 4.91449 20.7914 4.59693 20.547 4.328ZM26.49 11.666C26.5806 11.666 26.6703 11.6846 26.7534 11.7207C26.8365 11.7569 26.9112 11.8097 26.973 11.876C27.0353 11.9424 27.0833 12.0208 27.1143 12.1065C27.1452 12.1921 27.1584 12.2831 27.153 12.374L25.985 31.124C25.9545 31.6309 25.7319 32.1071 25.3625 32.4557C24.9932 32.8042 24.5048 32.9989 23.997 33H9.144C8.63632 32.9989 8.14814 32.8044 7.77882 32.4561C7.40949 32.1077 7.18677 31.6317 7.156 31.125L5.988 12.374C5.98246 12.283 5.99556 12.1917 6.02651 12.1059C6.05746 12.0201 6.10561 11.9415 6.168 11.875C6.22978 11.8087 6.30455 11.7559 6.38765 11.7197C6.47074 11.6836 6.56039 11.665 6.651 11.665H26.49V11.666Z" fill="#B4B4C4"/></g><defs><clipPath id="cdel"><rect width="32" height="32" fill="white"/></clipPath></defs></svg></button>
               </div>
             </div>
             <div class="media-item-row">
-              <div class="mi-thumb"><div class="thumb-box thumb-img">IMG</div></div>
-              <div class="mi-type"><div class="mi-type-label">Interior · Image</div></div>
+              <div class="mi-thumb"><div class="thumb-box thumb-img"><svg width="22" height="22" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#ci)"><path fill-rule="evenodd" clip-rule="evenodd" d="M31.5834 4.66666C31.5834 2.31945 29.6806 0.416656 27.3334 0.416656H4.66669C2.31948 0.416656 0.416687 2.31945 0.416687 4.66666V27.3333C0.416687 29.6806 2.31948 31.5833 4.66669 31.5833H27.3334C29.6806 31.5833 31.5834 29.6806 31.5834 27.3333V4.66666ZM28.75 4.66666C28.75 3.88426 28.1158 3.24999 27.3334 3.24999H4.66669C3.88429 3.24999 3.25002 3.88426 3.25002 4.66666V27.3333C3.25002 28.1157 3.88429 28.75 4.66669 28.75H27.3334C28.1158 28.75 28.75 28.1157 28.75 27.3333V4.66666Z" fill="#B4B4C4"/><path d="M5.80945 23.8216L11.923 12.6134C12.4599 11.629 13.8735 11.629 14.4104 12.6134L18.8992 20.843L20.4367 18.1525C20.9806 17.2008 22.3528 17.2008 22.8966 18.1525L26.1222 23.7972C26.6619 24.7415 25.9799 25.9167 24.8922 25.9167H7.05312C5.97779 25.9167 5.29452 24.7656 5.80945 23.8216Z" fill="#B4B4C4"/><path d="M24.5 10.3333C24.5 11.8981 23.2315 13.1667 21.6666 13.1667C20.1018 13.1667 18.8333 11.8981 18.8333 10.3333C18.8333 8.76853 20.1018 7.5 21.6666 7.5C23.2315 7.5 24.5 8.76853 24.5 10.3333Z" fill="#B4B4C4"/></g><defs><clipPath id="ci"><rect width="32" height="32" fill="white"/></clipPath></defs></svg></div></div>
+              <div class="mi-type"><div class="mi-type-label">Image</div></div>
               <div class="mi-timestamps"><div class="mi-ts-event">11:47:33 AM</div><div class="mi-ts-note">Individual image timestamp</div></div>
               <div class="mi-expiry">Expires 20 May 2026</div>
               <div class="mi-status"><span class="badge badge-available">Available</span></div>
               <div class="mi-actions">
-                <button class="btn-view view-available" onclick="openLightbox(event,'Interior · Image','11:47:33 AM','Available','Expires 20 May 2026','Truck 487225','J. Smith','SWRAG-05','Exception — Hot Load','788 Richards Blvd, Sacramento CA')"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Available</button>
-                <button class="btn btn-ghost btn-sm">⬇ Download</button>
-                <button class="btn btn-danger btn-sm">Delete</button>
+                <button class="btn-view view-available" onclick="openLightbox(event,'Image','11:47:33 AM','Available','Expires 20 May 2026','Truck 487225','J. Smith','SWRAG-05','Exception — Hot Load','788 Richards Blvd, Sacramento CA')"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Available</button>
+                <button class="btn btn-sm" style="background:transparent;border:none;padding:0 6px;" title="Download"><svg width="22" height="22" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#cd)"><path d="M29.74 12.294H21.814V1H9.926V12.294H2L15.87 25.471L29.74 12.294ZM2 29.235V33H29.74V29.235H2Z" fill="#B4B4C4"/></g><defs><clipPath id="cd"><rect width="32" height="32" fill="white"/></clipPath></defs></svg></button>
+                <button class="btn btn-sm" style="background:transparent;border:none;padding:0 6px;" title="Delete"><svg width="22" height="22" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#cdel)"><path d="M27.82 10.332H5.323C4.593 10.332 4 9.735 4 9V7.665C4 6.929 4.592 6.332 5.323 6.332H9.293C9.293 4.378 9.7 3.237 10.606 2.324C11.512 1.41 12.642 1 14.58 1H18.562C20.502 1 21.631 1.41 22.536 2.324C23.442 3.237 23.85 4.378 23.85 6.332H27.82C28.55 6.332 29.143 6.929 29.143 7.665V9C29.143 9.736 28.55 10.333 27.82 10.333V10.332ZM20.547 4.328C20.2822 4.082 19.9677 3.89562 19.6248 3.78143C19.2819 3.66723 18.9184 3.62787 18.559 3.666H14.583C14.2237 3.62802 13.8605 3.66745 13.5178 3.78165C13.175 3.89584 12.8607 4.08214 12.596 4.328C12.3516 4.59693 12.1668 4.91449 12.0537 5.25986C11.9407 5.60523 11.9019 5.9706 11.94 6.332H21.203C21.2411 5.9706 21.2023 5.60523 21.0893 5.25986C20.9762 4.91449 20.7914 4.59693 20.547 4.328ZM26.49 11.666C26.5806 11.666 26.6703 11.6846 26.7534 11.7207C26.8365 11.7569 26.9112 11.8097 26.973 11.876C27.0353 11.9424 27.0833 12.0208 27.1143 12.1065C27.1452 12.1921 27.1584 12.2831 27.153 12.374L25.985 31.124C25.9545 31.6309 25.7319 32.1071 25.3625 32.4557C24.9932 32.8042 24.5048 32.9989 23.997 33H9.144C8.63632 32.9989 8.14814 32.8044 7.77882 32.4561C7.40949 32.1077 7.18677 31.6317 7.156 31.125L5.988 12.374C5.98246 12.283 5.99556 12.1917 6.02651 12.1059C6.05746 12.0201 6.10561 11.9415 6.168 11.875C6.22978 11.8087 6.30455 11.7559 6.38765 11.7197C6.47074 11.6836 6.56039 11.665 6.651 11.665H26.49V11.666Z" fill="#B4B4C4"/></g><defs><clipPath id="cdel"><rect width="32" height="32" fill="white"/></clipPath></defs></svg></button>
               </div>
             </div>
           </div>
@@ -1334,9 +1303,6 @@
         <td colspan="8">
           <div class="group-header" onclick="toggleRow(this)">
             <span class="group-expand">▶</span>
-            <div class="group-cameras">
-              <div class="cam-icon road" title="Road-facing">R</div>
-            </div>
             <div class="group-event">
               <div class="event-type">Stop</div>
               <div class="event-address">2301 Del Paso Blvd, Sacramento CA</div>
@@ -1359,15 +1325,15 @@
           </div>
           <div class="media-items-container">
             <div class="media-item-row">
-              <div class="mi-thumb"><div class="thumb-box thumb-img">IMG</div></div>
-              <div class="mi-type"><div class="mi-type-label">Road-facing · Image</div></div>
+              <div class="mi-thumb"><div class="thumb-box thumb-img"><svg width="22" height="22" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#ci)"><path fill-rule="evenodd" clip-rule="evenodd" d="M31.5834 4.66666C31.5834 2.31945 29.6806 0.416656 27.3334 0.416656H4.66669C2.31948 0.416656 0.416687 2.31945 0.416687 4.66666V27.3333C0.416687 29.6806 2.31948 31.5833 4.66669 31.5833H27.3334C29.6806 31.5833 31.5834 29.6806 31.5834 27.3333V4.66666ZM28.75 4.66666C28.75 3.88426 28.1158 3.24999 27.3334 3.24999H4.66669C3.88429 3.24999 3.25002 3.88426 3.25002 4.66666V27.3333C3.25002 28.1157 3.88429 28.75 4.66669 28.75H27.3334C28.1158 28.75 28.75 28.1157 28.75 27.3333V4.66666Z" fill="#B4B4C4"/><path d="M5.80945 23.8216L11.923 12.6134C12.4599 11.629 13.8735 11.629 14.4104 12.6134L18.8992 20.843L20.4367 18.1525C20.9806 17.2008 22.3528 17.2008 22.8966 18.1525L26.1222 23.7972C26.6619 24.7415 25.9799 25.9167 24.8922 25.9167H7.05312C5.97779 25.9167 5.29452 24.7656 5.80945 23.8216Z" fill="#B4B4C4"/><path d="M24.5 10.3333C24.5 11.8981 23.2315 13.1667 21.6666 13.1667C20.1018 13.1667 18.8333 11.8981 18.8333 10.3333C18.8333 8.76853 20.1018 7.5 21.6666 7.5C23.2315 7.5 24.5 8.76853 24.5 10.3333Z" fill="#B4B4C4"/></g><defs><clipPath id="ci"><rect width="32" height="32" fill="white"/></clipPath></defs></svg></div></div>
+              <div class="mi-type"><div class="mi-type-label">Image</div></div>
               <div class="mi-timestamps"><div class="mi-ts-event">09:33:11 AM</div><div class="mi-ts-note">Individual image timestamp</div></div>
               <div class="mi-expiry">Expires 20 May 2026</div>
               <div class="mi-status"><span class="badge badge-available">Available</span></div>
               <div class="mi-actions">
-                <button class="btn-view view-available" onclick="openLightbox(event,'Road-facing · Image','09:33:11 AM','Available','Expires 20 May 2026','Truck 319B','R. Davis','SWRAG-07','Stop','2301 Del Paso Blvd, Sacramento CA')"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Available</button>
-                <button class="btn btn-ghost btn-sm">⬇ Download</button>
-                <button class="btn btn-danger btn-sm">Delete</button>
+                <button class="btn-view view-available" onclick="openLightbox(event,'Image','09:33:11 AM','Available','Expires 20 May 2026','Truck 319B','R. Davis','SWRAG-07','Stop','2301 Del Paso Blvd, Sacramento CA')"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Available</button>
+                <button class="btn btn-sm" style="background:transparent;border:none;padding:0 6px;" title="Download"><svg width="22" height="22" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#cd)"><path d="M29.74 12.294H21.814V1H9.926V12.294H2L15.87 25.471L29.74 12.294ZM2 29.235V33H29.74V29.235H2Z" fill="#B4B4C4"/></g><defs><clipPath id="cd"><rect width="32" height="32" fill="white"/></clipPath></defs></svg></button>
+                <button class="btn btn-sm" style="background:transparent;border:none;padding:0 6px;" title="Delete"><svg width="22" height="22" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#cdel)"><path d="M27.82 10.332H5.323C4.593 10.332 4 9.735 4 9V7.665C4 6.929 4.592 6.332 5.323 6.332H9.293C9.293 4.378 9.7 3.237 10.606 2.324C11.512 1.41 12.642 1 14.58 1H18.562C20.502 1 21.631 1.41 22.536 2.324C23.442 3.237 23.85 4.378 23.85 6.332H27.82C28.55 6.332 29.143 6.929 29.143 7.665V9C29.143 9.736 28.55 10.333 27.82 10.333V10.332ZM20.547 4.328C20.2822 4.082 19.9677 3.89562 19.6248 3.78143C19.2819 3.66723 18.9184 3.62787 18.559 3.666H14.583C14.2237 3.62802 13.8605 3.66745 13.5178 3.78165C13.175 3.89584 12.8607 4.08214 12.596 4.328C12.3516 4.59693 12.1668 4.91449 12.0537 5.25986C11.9407 5.60523 11.9019 5.9706 11.94 6.332H21.203C21.2411 5.9706 21.2023 5.60523 21.0893 5.25986C20.9762 4.91449 20.7914 4.59693 20.547 4.328ZM26.49 11.666C26.5806 11.666 26.6703 11.6846 26.7534 11.7207C26.8365 11.7569 26.9112 11.8097 26.973 11.876C27.0353 11.9424 27.0833 12.0208 27.1143 12.1065C27.1452 12.1921 27.1584 12.2831 27.153 12.374L25.985 31.124C25.9545 31.6309 25.7319 32.1071 25.3625 32.4557C24.9932 32.8042 24.5048 32.9989 23.997 33H9.144C8.63632 32.9989 8.14814 32.8044 7.77882 32.4561C7.40949 32.1077 7.18677 31.6317 7.156 31.125L5.988 12.374C5.98246 12.283 5.99556 12.1917 6.02651 12.1059C6.05746 12.0201 6.10561 11.9415 6.168 11.875C6.22978 11.8087 6.30455 11.7559 6.38765 11.7197C6.47074 11.6836 6.56039 11.665 6.651 11.665H26.49V11.666Z" fill="#B4B4C4"/></g><defs><clipPath id="cdel"><rect width="32" height="32" fill="white"/></clipPath></defs></svg></button>
               </div>
   </table>
 
